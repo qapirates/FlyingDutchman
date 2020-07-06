@@ -54,9 +54,7 @@
     // Render data to Countries
     $( document ).ready(function() {
     	let dropdown = $('#country');
-
         dropdown.empty();
-
         dropdown.append('<option selected="true" disabled>Choose State/Province</option>');
         dropdown.prop('selectedIndex', 0);
 
@@ -67,8 +65,47 @@
         $('#area-city').append($('<option></option>').attr('value', 0).text("Select Area"));
         $.getJSON(url, function (data) {
           $.each(data, function (key, entry) {
-            dropdown.append($('<option></option>').attr('value', entry.id).text(entry.name));
+            dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
           })
+        });
+        
+     // Add an element
+        $("#addDiv").click(function() {
+     	   console.log("Here");
+     	   
+     	  var search = {}
+     	    search["GUID"] = $("#GUID").val();
+	     	search["MAC_Id"] = $("#MAC_Id").val();
+	     	search["Device_Id"] = $("#Device_Id").val();
+	     	search["Status"] = $("#Status").val();
+	     	search["country"] = $("#country").val();
+	     	search["states"] = $("#states").val();
+	     	search["area-city"] = $("#area-city").val();
+	     	search["latitude"] = $("#latitude").val();
+	     	search["longtitude"] = $("#longtitude").val();
+	     	console.log(JSON.stringify(search));
+
+     	    $("#addDiv").prop("disabled", true);
+
+     	    $.ajax({
+     	        type: "POST",
+     	        contentType: "application/json",
+     	        url: "/admin/addDeviceForUser",
+     	        data: JSON.stringify(search),
+     	        dataType: 'json',
+     	        cache: false,
+     	        timeout: 600000,
+     	        success: function (data) {
+
+     	            alert("Done");
+
+     	        },
+     	        error: function (e) {
+
+     	        	alert("Fucked");
+
+     	        }
+     	    });
         });
     });
  	// Render data to States
@@ -79,14 +116,14 @@
         const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
         $.getJSON(url, function (data) {
             $.each(data, function (key, entry) {
-              if(entry.id == countryName){
+              if(entry.name == countryName){
             	  var state = entry.states;
             	  $('#states').empty();
             	  dropdown.append($('<option></option>').attr('value', 0).text("Select State"));
             	  $('#area-city').append($('<option></option>').attr('value', 0).text("Select Area"));
             	  $.each(state, function(i, item) {
             		  	
-            		    dropdown.append($('<option></option>').attr('value', item.id).text(item.name));
+            		    dropdown.append($('<option></option>').attr('value', item.name).text(item.name));
             		});
               }
             })
@@ -103,17 +140,17 @@
         
         $.getJSON(url, function (data) {
             $.each(data, function (key, entry) {
-              if(entry.id == countryName){
+              if(entry.name == countryName){
             	  var state = entry.states;
             	  //console.log("State : " + state);
             	  $.each(state, function(i, item) {
-            		    if(item.id == stateName){
+            		    if(item.name == stateName){
             		      var cities = item.cities;
             		      $('#area-city').empty();
             		      dropdown.append($('<option></option>').attr('value', 0).text("Select Area"));
             		      $.each(cities, function(i1, item1) {
             		    	  	
-                    		    dropdown.append($('<option></option>').attr('value', item1.id).text(item1.name));
+                    		    dropdown.append($('<option></option>').attr('value', item1.name).text(item1.name));
                     		});
             		    }
             		});
@@ -132,16 +169,16 @@
        
        $.getJSON(url, function (data) {
            $.each(data, function (key, entry) {
-             if(entry.id == countryName){
+             if(entry.name == countryName){
            	  var state = entry.states;
            	  //console.log("State : " + state);
            	  $.each(state, function(i, item) {
-           		    if(item.id == stateName){
+           		    if(item.name == stateName){
            		      var cities = item.cities;
            		      $('#latitude').val("");
            		      $('#longtitude').val("");
            		      $.each(cities, function(i1, item1) {
-           		    	  if(item1.id==city){
+           		    	  if(item1.name==city){
            		    		$('#latitude').val($('#latitude').val() + item1.latitude);
 	           		    	$('#longtitude').val($('#longtitude').val() + item1.longitude);
            		    	  }
@@ -151,7 +188,8 @@
              }
            })
          })
-    })
+    });
+ 	
     
     </script>
 </head>
@@ -1127,7 +1165,7 @@
                                                           <label class="login2 pull-right pull-right-pro">GUID</label>
                                                       </div>
                                                       <div class="col-lg-12">
-                                                          <input type="text" class="form-control" placeholder="GUID" />
+                                                          <input type="text" class="form-control" id="GUID" placeholder="GUID" />
                                                       </div>
                                                   </div>
                                               </div>
@@ -1137,7 +1175,7 @@
                                                           <label class="login2 pull-right pull-right-pro">MAC_Id</label>
                                                       </div>
                                                       <div class="col-lg-12">
-                                                          <input type="text" class="form-control" placeholder="MAC_Id" />
+                                                          <input type="text" class="form-control" id="MAC_Id" placeholder="MAC_Id" />
                                                       </div>
                                                   </div>
                                               </div>
@@ -1147,7 +1185,7 @@
                                                           <label class="login2 pull-right pull-right-pro">Device_Id</label>
                                                       </div>
                                                       <div class="col-lg-12">
-                                                          <input type="text" class="form-control" placeholder="Device Id" />
+                                                          <input type="text" class="form-control" id="Device_Id" placeholder="Device Id" />
                                                       </div>
                                                   </div>
                                               </div>
@@ -1157,7 +1195,7 @@
                                                       <label class="login2 pull-right pull-right-pro">Status</label>
                                                   </div>
                                                   <div class="col-lg-12">
-                                                      <input type="text" class="form-control" placeholder="Status" />
+                                                      <input type="text" class="form-control" id="Status" placeholder="Status" />
                                                   </div>
                                               </div>
                                           </div>
@@ -1184,7 +1222,7 @@
                                         <div class="sparkline16-outline-icon">
                                             <span class="sparkline16-collapse-link"><i class="fa fa-chevron-up"></i></span>
                                             <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline16-collapse-close"><i class="fa fa-times"></i></span>
+                                            <span class="sparkline14-collapse-close"><i class="fa fa-times"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -1259,7 +1297,7 @@
                        <div class="col-lg-5"></div>
                        <div class="col-lg-6">
                            <div class="login-horizental cancel-wp pull-left">
-                               <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Add New Device</button>
+                               <button class="btn btn-sm btn-primary login-submit-cs" id="addDiv" type="submit">Save New Device</button>
                                <button class="btn btn-danger" type="submit">Cancel & Reset</button>
                            </div>
                        </div>
