@@ -35,6 +35,12 @@
 		============================================ -->
     <link rel="stylesheet" href="/css/data-table/bootstrap-table.css">
     <link rel="stylesheet" href="/css/data-table/bootstrap-editable.css">
+    <!-- modals CSS
+		============================================ -->
+    <link rel="stylesheet" href="/css/modals.css">
+    <!-- tabs CSS
+		============================================ -->
+    <link rel="stylesheet" href="/css/tabs.css">
     <!-- normalize CSS
 		============================================ -->
     <link rel="stylesheet" href="/css/normalize.css">
@@ -50,11 +56,110 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
+    
+    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+     <script>
+		var _nextId = 1;
+		var _activeId = 0;var _GUID = 0;var _activeId = 0;var _MAC_ID = 0;var _Device_Name = 0;var _Country = 0;var _State = 0;var _Area = 0;var _Latitude = 0;var _Longitude = 0;
+		var _Status = 0;var _Last_Updated_By = 0;var _Last_Updated_On = 0;
+		var _OnChangeAppDtatatablePopulate = 0;
+	</script>
+     <script>
+     function populateModalEdit(ctl) {
+    	 var states_listValue=$('#states')[0].length;
+    	 var area_listValue=$('#area-city')[0].length;
+    	 if(states_listValue > 0 || area_listValue > 0){
+    		 $('#states').empty(); $('#area-city').empty();
+    	 }
+    	 if(!$("#table tbody").length == 0){
+    		 $("#WarningModalhdbgcl").modal('show');
+    		 _row = $(ctl).parents("tr"); 
+
+ 			var cols = _row.children("td");	 
+ 			
+ 			 var x = ctl.parentNode.parentNode.rowIndex;
+ 			 var tab = document.getElementById('table');
+ 			 _activeId = tab.rows[x].cells[1].innerHTML;
+ 			_GUID = tab.rows[x].cells[2].innerHTML;
+ 			_MAC_ID = tab.rows[x].cells[3].innerHTML;
+ 			_Device_Name = tab.rows[x].cells[4].innerHTML;
+ 			_Country = tab.rows[x].cells[5].innerHTML;
+ 			_State = tab.rows[x].cells[6].innerHTML;
+ 			_Area = tab.rows[x].cells[7].innerHTML;
+ 			_Latitude = tab.rows[x].cells[8].innerHTML;
+ 			_Longitude = tab.rows[x].cells[9].innerHTML;
+ 			_Status = tab.rows[x].cells[10].innerHTML;
+ 			_Last_Updated_By = tab.rows[x].cells[11].innerHTML;
+ 			_Last_Updated_On = tab.rows[x].cells[12].innerHTML;
+ 			 //console.log(_activeId);
+ 			document.getElementById("Device_Id").value = _Device_Name;
+			let count = $('#country');let stat = $('#states');let areadd = $('#area-city');let stats = $('#Status');
+
+ 			$("#country").val(_Country); count.append($('<option></option>').attr('value', _Country).text(_Country)); stat.append($('<option></option>').attr('value', _State).text(_State));
+ 			areadd.append($('<option></option>').attr('value', _Area).text(_Area));
+ 			
+    	 }
+    }	
+     // Country
+     $( document ).ready(function() {
+    	 const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
+    	 let count = $('#country')
+         $.getJSON(url, function (data) {
+	           $.each(data, function (key, entry) {
+	        	   count.append($('<option></option>').attr('value', entry.name).text(entry.name));
+	           })
+         }); 
+     });
+  // Render data to States
+     $(document).on('click', '#country', function() {
+    	 
+         var countryName = $( "#country" ).val();
+         let dropdown = $('#states');
+         const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
+         $.getJSON(url, function (data) {
+             $.each(data, function (key, entry) {
+               if(entry.name == countryName){
+             	  var state = entry.states;
+             	  $('#states').empty();
+             	  $.each(state, function(i, item) {
+             		    dropdown.append($('<option></option>').attr('value', item.name).text(item.name));
+             		});
+               }
+             })
+           });
+     });
+  // Render data to Area
+     $(document).on('click', '#states', function() {
+     	var countryName = $( "#country" ).val();
+         var stateName = $( "#states" ).val();
+         
+         let dropdown = $('#area-city');
+         
+         const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
+         
+         $.getJSON(url, function (data) {
+             $.each(data, function (key, entry) {
+               if(entry.name == countryName){
+             	  var state = entry.states;
+             	  //console.log("State : " + state);
+             	  $.each(state, function(i, item) {
+             		    if(item.name == stateName){
+             		      var cities = item.cities;
+             		      $('#area-city').empty();
+             		      dropdown.append($('<option></option>').attr('value', 0).text("Select Area"));
+             		      $.each(cities, function(i1, item1) {
+             		    	  	
+                     		    dropdown.append($('<option></option>').attr('value', item1.name).text(item1.name));
+                     		});
+             		    }
+             		});
+               }
+             })
+           });
+     });
     </script>
+    
 </head>
 
 <body class="materialdesign">
@@ -1022,17 +1127,18 @@
                                                 <tr>
                                                     <th data-field="state" data-checkbox="true"></th>
                                                     <th data-field="ID">ID</th>
-                                                    <th data-field="GUID" data-editable="true">GUID</th>
-                                                    <th data-field="MAC_ID" data-editable="true">MAC ID</th>
-                                                    <th data-field="Device_Name" data-editable="true">Device Name</th>
-                                                    <th data-field="Country" data-editable="true">Country</th>
-                                                    <th data-field="State" data-editable="true">State</th>
-                                                    <th data-field="Area" data-editable="true">Area</th>
-                                                    <th data-field="Latitude" data-editable="true">Latitude</th>
-                                                    <th data-field="Longitude" data-editable="true">Longitude</th>
-                                                    <th data-field="Status" data-editable="true">Status</th>
+                                                    <th data-field="GUID">GUID</th>
+                                                    <th data-field="MAC_ID">MAC ID</th>
+                                                    <th data-field="Device_Name">Device Name</th>
+                                                    <th data-field="Country">Country</th>
+                                                    <th data-field="State">State</th>
+                                                    <th data-field="Area">Area</th>
+                                                    <th data-field="Latitude">Latitude</th>
+                                                    <th data-field="Longitude">Longitude</th>
+                                                    <th data-field="Status">Status</th>
                                                     <th data-field="Last_Updated_By">Last Updated By</th>
                                                     <th data-field="Last Updated On">Last Updated On</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1041,7 +1147,7 @@
                                                     <td th:text="${ddata.id}" />
                                                     <td th:text="${ddata.guid}" />
                                                     <td th:text="${ddata.mac_Id}" />
-                                                    <td th:text="${ddata.device_Name}" />
+                                                    <td onclick="getRecent()" th:text="${ddata.device_Name}" />
                                                     <td th:text="${ddata.country}" />
                                                     <td th:text="${ddata.state}" />
                                                     <td th:text="${ddata.area}" />
@@ -1050,8 +1156,8 @@
                                                     <td th:text="${ddata.status}" />
                                                     <td th:text="${ddata.lastupdatedby}" />
                                                     <td th:text="${ddata.lastupdatedon}" />
+                                                    <td><button type="button" onclick="populateModalEdit(this)" class="btn btn-warning">Edit</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
                                                 </tr>
-                                                
                                             </tbody>
                                         </table>                                    
                                  </div>
@@ -1112,6 +1218,80 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    
+    <div id="WarningModalhdbgcl" class="modal modal-adminpro-general Customwidth-popup-WarningModal fade" style="height: 700px" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header header-color-modal bg-color-3">
+                    <h4 class="modal-title">BG Color Header Modal</h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group-inner">
+	                    <div class="row">
+	                        <div class="col-lg-1">
+	                             <label class="login2 pull-right pull-right-pro">Device_Name</label>
+	                         </div>
+	                         <div class="col-lg-12">
+	                             <input type="text" class="form-control" id="Device_Id" placeholder="Device Name" />
+	                          </div>
+	                        </div>
+	                        <div class="row">
+	                         <div class="col-lg-1">
+	                             <label class="login2 pull-right pull-right-pro">Country</label>
+	                         </div>
+	                         <div class="col-lg-12">
+	                             <select class="form-control" id="country">
+	
+								</select>
+	                         </div>
+	                         </div>
+	                         <div class="row">
+	                         <div class="col-lg-1">
+	                             <label class="login2 pull-right pull-right-pro">State</label>
+	                         </div>
+	                         <div class="col-lg-12">
+	                              <select class="form-control" id="states">
+	
+								  </select>
+	                         </div>
+	                     </div>
+	                     <div class="row">
+	                       <div class="col-lg-1">
+	                           <label class="login2 pull-right pull-right-pro">Area</label>
+	                       </div>
+	                       <div class="col-lg-12">
+	                           <select class="form-control" id="area-city">
+	
+						</select>
+	                       </div>
+	                   </div>
+	                   <div class="row">
+	                    <div class="col-lg-1">
+	                        <label class="login2 pull-right pull-right-pro">Status</label>
+	                    </div>
+	                    <div class="col-lg-12">
+	                        <select class="form-control" id="Status">
+									<option value="true">Active</option>
+									<option value="false">InActive</option>
+							</select>
+	                    </div>
+	                </div>
+               </div>
+              </div>
+              <div class="modal-footer">
+              	<button type="button" class="btn btn-light">Cancel</button>
+                  <button type="button" class="btn btn-primary">Update</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- /Modal -->
+    
      <!-- jquery
 		============================================ -->
     <script src="/js/vendor/jquery-1.11.3.min.js"></script>
@@ -1130,6 +1310,9 @@
     <!-- scrollUp JS
 		============================================ -->
     <script src="/js/jquery.scrollUp.min.js"></script>
+    <!-- modal JS
+		============================================ -->
+    <script src="js/modal-active.js"></script>
     <!-- counterup JS
 		============================================ -->
     <script src="/js/counterup/jquery.counterup.min.js"></script>

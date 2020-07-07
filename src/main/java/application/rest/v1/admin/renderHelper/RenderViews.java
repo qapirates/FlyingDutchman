@@ -24,6 +24,8 @@ public class RenderViews {
 
 	@GetMapping("/addNew")
 	public static String getView() {
+		
+		
 		return "deviceDetails";
 	}
 
@@ -32,7 +34,6 @@ public class RenderViews {
 
 		String url = "https://piratesbay-chipper-roan-rs.eu-gb.mybluemix.net/api/DeviceDetails";
 		String jsondata =AdminOriginGetEntryService.getEntryElements(url);
-		//System.err.println("JSON " + jsondata);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			List<DeviceModel> ppl2 = Arrays.asList(mapper.readValue(jsondata, DeviceModel[].class));
