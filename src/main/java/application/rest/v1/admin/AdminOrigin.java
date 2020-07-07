@@ -35,7 +35,7 @@ public class AdminOrigin {
 		deviceModel.setState(payload.get("states").toString());
 		deviceModel.setOwner(payload.get("owner").toString());
 		
-		AdminOriginAddEntryService.contactInsertionApi(deviceModel.getGuid(), deviceModel.getMac_id(), deviceModel.getDevice_Name(), deviceModel.getStatus(), 
+		Boolean flag = AdminOriginAddEntryService.contactInsertionApi(deviceModel.getGuid(), deviceModel.getMac_id(), deviceModel.getDevice_Name(), deviceModel.getStatus(), 
 				deviceModel.getCountry(), deviceModel.getState(), deviceModel.getArea(), deviceModel.getLatitude(), deviceModel.getLongitude(), deviceModel.getOwner());
 		
 		return ResponseEntity.ok(deviceModel);
@@ -61,6 +61,19 @@ public class AdminOrigin {
 		
 		AdminOriginAddEntryService.contactUpdateApi(deviceModel.getId(), deviceModel.getGuid(), deviceModel.getMac_id(), deviceModel.getDevice_Name(), deviceModel.getStatus(), 
 				deviceModel.getCountry(), deviceModel.getState(), deviceModel.getArea(), deviceModel.getLatitude(), deviceModel.getLongitude(), deviceModel.getOwner());
+		
+		return ResponseEntity.ok(deviceModel);
+	}
+	
+	@PostMapping(value = "/deleteDeviceForUser")
+	public ResponseEntity<DeviceModel>  deleteDevice(@RequestBody HashMap<String, Object> payload) {
+		
+		DeviceModel deviceModel = new DeviceModel();
+
+		System.err.println(payload);
+		deviceModel.setId(Integer.parseInt(payload.get("Id").toString()));
+		
+		AdminOriginAddEntryService.contactDeleteApi(deviceModel.getId());
 		
 		return ResponseEntity.ok(deviceModel);
 	}
