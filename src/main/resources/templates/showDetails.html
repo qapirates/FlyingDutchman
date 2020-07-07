@@ -56,9 +56,13 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+     <!-- Sweetalert2
+		============================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     
     
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+     
      <script>
 		var _nextId = 1;
 		var _activeId = 0;var _GUID = 0;var _activeId = 0;var _MAC_ID = 0;var _Device_Name = 0;var _Country = 0;var _State = 0;var _Area = 0;var _Latitude = 0;var _Longitude = 0;
@@ -98,6 +102,56 @@
 
  			$("#country").val(_Country); count.append($('<option></option>').attr('value', _Country).text(_Country)); stat.append($('<option></option>').attr('value', _State).text(_State));
  			areadd.append($('<option></option>').attr('value', _Area).text(_Area));
+ 			
+ 			// Update
+ 		     $("#updatespecific").click(function() {
+ 		    	 console.log("update value");
+ 		    	 var search = {}
+ 		    	search["Id"] = _activeId;
+ 		  	    search["GUID"] = _GUID;
+ 		    	search["MAC_Id"] = _MAC_ID;
+ 		    	search["Device_Id"] = $("#Device_Id").val();
+ 		    	search["Status"] = $("#Status").val();
+ 		    	search["country"] = $("#country").val();
+ 		    	search["owner"] = _Last_Updated_By;
+ 		    	search["states"] = $("#states").val();
+ 		    	search["area-city"] = $("#area-city").val();
+ 		    	search["latitude"] = _Latitude;
+ 		    	search["longtitude"] = _Longitude;
+ 		    	
+ 		    	$("#updatespecific").prop("disabled", true);
+ 		    	
+ 		    	$.ajax({
+ 		 	        type: "POST",
+ 		 	        contentType: "application/json",
+ 		 	        url: "/admin/updateDeviceForUser",
+ 		 	        data: JSON.stringify(search),
+ 		 	        dataType: 'json',
+ 		 	        cache: false,
+ 		 	        timeout: 600000,
+ 		 	        success: function (data) {
+ 		 	        	Swal.fire(
+ 		 	        			  'Ypeeeeeeeee!',
+ 		 	        			  'Device details updated',
+ 		 	        			  'success'
+ 		 	        			)
+ 		 		     	$("#updatespecific").prop("disabled", false);
+ 		 	        	$('#WarningModalhdbgcl').modal('toggle');
+ 		 	        	location.reload();
+ 		 	        },
+ 		 	        error: function (e) {
+ 		 	        	Swal.fire({
+ 		 	        		  icon: 'error',
+ 		 	        		  title: 'Oops...',
+ 		 	        		  text: 'Something went very wrong!',
+ 		 	        		  footer: '<a href>Why do I have this issue?</a>'
+ 		 	        		})
+ 		 	        }
+ 		 	    });
+ 		     });
+ 		    $("#cancl").click(function() {
+ 		    	$('#WarningModalhdbgcl').modal('toggle');
+ 		    });
  			
     	 }
     }	
@@ -158,6 +212,40 @@
              })
            });
      });
+  // Render data to Latitude & Longtitude
+  $( document ).ready(function() {
+     $(document).on('change', '#area-city', function() {
+      	
+  	   var countryName = $( "#country" ).val();
+         var stateName = $( "#states" ).val();
+         var city = $('#area-city').val();
+         
+         const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
+         
+         $.getJSON(url, function (data) {
+             $.each(data, function (key, entry) {
+               if(entry.name == countryName){
+             	  var state = entry.states;
+             	  //console.log("State : " + state);
+             	  $.each(state, function(i, item) {
+             		    if(item.name == stateName){
+             		      var cities = item.cities;
+             		      $('#latitude').val("");
+             		      $('#longtitude').val("");
+             		      $.each(cities, function(i1, item1) {
+             		    	  if(item1.name==city){
+             		    		_Latitude = item1.latitude;
+             		    		_Longitude = item1.longitude;
+             		    	  }
+                     		});
+             		    }
+             		});
+               }
+             })
+           })
+      });
+  })
+     
     </script>
     
 </head>
@@ -1283,8 +1371,8 @@
                </div>
               </div>
               <div class="modal-footer">
-              	<button type="button" class="btn btn-light">Cancel</button>
-                  <button type="button" class="btn btn-primary">Update</button>
+              	<button type="submit" id="cancl" class="btn btn-light">Cancel</button>
+                  <button type="submit" id="updatespecific" class="btn btn-primary">Update</button>
               </div>
             </div>
         </div>
