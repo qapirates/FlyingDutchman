@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>FlyingDutchMan</title>
+    <title>Data Table | Adminpro - Admin Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
@@ -31,15 +31,16 @@
     <!-- animate CSS
 		============================================ -->
     <link rel="stylesheet" href="/css/animate.css">
-    <!-- modals CSS
+    <!-- normalize CSS
 		============================================ -->
-    <link rel="stylesheet" href="/css/modals.css">
+    <link rel="stylesheet" href="/css/data-table/bootstrap-table.css">
+    <link rel="stylesheet" href="/css/data-table/bootstrap-editable.css">
     <!-- normalize CSS
 		============================================ -->
     <link rel="stylesheet" href="/css/normalize.css">
-    <!-- forms CSS
+    <!-- charts CSS
 		============================================ -->
-    <link rel="stylesheet" href="/css/form/all-type-forms.css">
+    <link rel="stylesheet" href="/css/c3.min.css">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="/css/style.css">
@@ -49,166 +50,10 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-     <!-- Sweetalert2
-		============================================ -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-     <!-- DataTable
-		============================================ -->    
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    
     <script>
-    // Render data to Countries
-    $(document).ready( function () {
-	    $('#myTable').DataTable();
-	} );
-    $( document ).ready(function() {
-    	let dropdown = $('#country');
-        dropdown.empty();
-        dropdown.append('<option selected="true" disabled>Choose State/Province</option>');
-        dropdown.prop('selectedIndex', 0);
-
-        const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
-
-        // Populate dropdown with list of provinces
-        $('#states').append($('<option></option>').attr('value', 0).text("Select State"));
-        $('#area-city').append($('<option></option>').attr('value', 0).text("Select Area"));
-        $.getJSON(url, function (data) {
-          $.each(data, function (key, entry) {
-            dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
-          })
-        });
-        
-     // Add an element
-        $("#addDiv").click(function() {
-     	   console.log("Here");
-     	   
-     	  var search = {}
-     	    search["GUID"] = $("#GUID").val();
-	     	search["MAC_Id"] = $("#MAC_Id").val();
-	     	search["Device_Id"] = $("#Device_Id").val();
-	     	search["Status"] = $("#Status").val();
-	     	search["country"] = $("#country").val();
-	     	search["owner"] = $("#owner").val();
-	     	search["states"] = $("#states").val();
-	     	search["area-city"] = $("#area-city").val();
-	     	search["latitude"] = $("#latitude").val();
-	     	search["longtitude"] = $("#longtitude").val();
-	     	console.log(JSON.stringify(search));
-
-     	    $("#addDiv").prop("disabled", true);
-
-     	    $.ajax({
-     	        type: "POST",
-     	        contentType: "application/json",
-     	        url: "/admin/addDeviceForUser",
-     	        data: JSON.stringify(search),
-     	        dataType: 'json',
-     	        cache: false,
-     	        timeout: 600000,
-     	        success: function (data) {
-     	        	Swal.fire(
-     	        			  'Ypeeeeeeeee!',
-     	        			  'Device is added',
-     	        			  'success'
-     	        			)
-     	        },
-     	        error: function (e) {
-     	        	Swal.fire({
-     	        		  icon: 'error',
-     	        		  title: 'Oops...',
-     	        		  text: 'Something went very wrong!',
-     	        		  footer: '<a href>Why do I have this issue?</a>'
-     	        		})
-     	        }
-     	    });
-        });
-    });
- 	// Render data to States
-    $(document).on('change', '#country', function() {
-    	
-        var countryName = $( "#country" ).val();
-        let dropdown = $('#states');
-        const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
-        $.getJSON(url, function (data) {
-            $.each(data, function (key, entry) {
-              if(entry.name == countryName){
-            	  var state = entry.states;
-            	  $('#states').empty();
-            	  dropdown.append($('<option></option>').attr('value', 0).text("Select State"));
-            	  $('#area-city').append($('<option></option>').attr('value', 0).text("Select Area"));
-            	  $.each(state, function(i, item) {
-            		  	
-            		    dropdown.append($('<option></option>').attr('value', item.name).text(item.name));
-            		});
-              }
-            })
-          });
-    });
- 	// Render data to Area
-    $(document).on('change', '#states', function() {
-    	var countryName = $( "#country" ).val();
-        var stateName = $( "#states" ).val();
-        
-        let dropdown = $('#area-city');
-        
-        const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
-        
-        $.getJSON(url, function (data) {
-            $.each(data, function (key, entry) {
-              if(entry.name == countryName){
-            	  var state = entry.states;
-            	  //console.log("State : " + state);
-            	  $.each(state, function(i, item) {
-            		    if(item.name == stateName){
-            		      var cities = item.cities;
-            		      $('#area-city').empty();
-            		      dropdown.append($('<option></option>').attr('value', 0).text("Select Area"));
-            		      $.each(cities, function(i1, item1) {
-            		    	  	
-                    		    dropdown.append($('<option></option>').attr('value', item1.name).text(item1.name));
-                    		});
-            		    }
-            		});
-              }
-            })
-          });
-    });
- 	// Render data to Latitude & Longtitude
-   $(document).on('change', '#area-city', function() {
-    	
-	   var countryName = $( "#country" ).val();
-       var stateName = $( "#states" ).val();
-       var city = $('#area-city').val();
-       
-       const url = 'https://raw.githubusercontent.com/SohamRoyNoel/CountryDataHost/master/countries.json';
-       
-       $.getJSON(url, function (data) {
-           $.each(data, function (key, entry) {
-             if(entry.name == countryName){
-           	  var state = entry.states;
-           	  //console.log("State : " + state);
-           	  $.each(state, function(i, item) {
-           		    if(item.name == stateName){
-           		      var cities = item.cities;
-           		      $('#latitude').val("");
-           		      $('#longtitude').val("");
-           		      $.each(cities, function(i1, item1) {
-           		    	  if(item1.name==city){
-           		    		$('#latitude').val($('#latitude').val() + item1.latitude);
-	           		    	$('#longtitude').val($('#longtitude').val() + item1.longitude);
-           		    	  }
-                   		});
-           		    }
-           		});
-             }
-           })
-         })
-    });
- 	
-    
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
     </script>
 </head>
 
@@ -956,10 +801,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="breadcome-heading">
-                                            <form role="search" class="">
-												<input type="text" placeholder="Search..." class="form-control">
-												<a href=""><i class="fa fa-search"></i></a>
-											</form>
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -1160,10 +1002,9 @@
             <!-- Basic Form Start -->
             <div class="basic-form-area mg-b-15">
                 <div class="container-fluid">
-                    
-                    
+                                       
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="sparkline16-list shadow-reset mg-t-30">
                                 <div class="sparkline16-hd">
                                     <div class="main-sparkline16-hd">
@@ -1176,156 +1017,50 @@
                                     </div>
                                 </div>
                                 <div class="sparkline16-graph">
-                                    <div class="date-picker-inner">
-                                         <div class="form-group-inner">
-                                                  <div class="row">
-                                                      <div class="col-lg-1" style="float: left">
-                                                          <label class="login2 pull-right pull-right-pro">GUID</label>
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                          <input type="text" class="form-control" id="GUID" placeholder="GUID" />
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                              <div class="form-group-inner">
-                                                  <div class="row">
-                                                      <div class="col-lg-1">
-                                                          <label class="login2 pull-right pull-right-pro">MAC_Id</label>
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                          <input type="text" class="form-control" id="MAC_Id" placeholder="MAC_Id" />
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                              <div class="form-group-inner">
-                                                  <div class="row">
-                                                      <div class="col-lg-1">
-                                                          <label class="login2 pull-right pull-right-pro">Device_Id</label>
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                          <input type="text" class="form-control" id="Device_Id" placeholder="Device Id" />
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                              <div class="form-group-inner">
-                                              <div class="row">
-                                                  <div class="col-lg-1">
-                                                      <label class="login2 pull-right pull-right-pro">Status</label>
-                                                  </div>
-                                                  <div class="col-lg-12">
-                                                      <select class="form-control" id="Status">
-	  														<option value="true">Active</option>
-	  														<option value="false">InActive</option>
-													  </select>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="form-group-inner">
-                                              <div class="row">
-                                                  <div class="col-lg-1">
-                                                      <label class="login2 pull-right pull-right-pro">LastUpdateBy</label>
-                                                  </div>
-                                                  <div class="col-lg-12">
-                                                      <input type="text" class="form-control" id="owner" placeholder="LastUpdateBy" />
-                                                  </div>
-                                              </div>
-                                          </div>
-                                        
-                                    </div>
+                                       <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="state" data-checkbox="true"></th>
+                                                    <th data-field="ID">ID</th>
+                                                    <th data-field="GUID" data-editable="true">GUID</th>
+                                                    <th data-field="MAC_ID" data-editable="true">MAC ID</th>
+                                                    <th data-field="Device_Name" data-editable="true">Device Name</th>
+                                                    <th data-field="Country" data-editable="true">Country</th>
+                                                    <th data-field="State" data-editable="true">State</th>
+                                                    <th data-field="Area" data-editable="true">Area</th>
+                                                    <th data-field="Latitude" data-editable="true">Latitude</th>
+                                                    <th data-field="Longitude" data-editable="true">Longitude</th>
+                                                    <th data-field="Status" data-editable="true">Status</th>
+                                                    <th data-field="Last_Updated_By">Last Updated By</th>
+                                                    <th data-field="Last Updated On">Last Updated On</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="ddata : ${devicedata}">
+                                                    <td></td>
+                                                    <td th:text="${ddata.id}" />
+                                                    <td th:text="${ddata.guid}" />
+                                                    <td th:text="${ddata.mac_Id}" />
+                                                    <td th:text="${ddata.device_Name}" />
+                                                    <td th:text="${ddata.country}" />
+                                                    <td th:text="${ddata.state}" />
+                                                    <td th:text="${ddata.area}" />
+                                                    <td th:text="${ddata.latitude}" />
+                                                    <td th:text="${ddata.longitude}" />
+                                                    <td th:text="${ddata.status}" />
+                                                    <td th:text="${ddata.lastupdatedby}" />
+                                                    <td th:text="${ddata.lastupdatedon}" />
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>                                    
+                                 </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="sparkline16-list shadow-reset mg-t-30">
-                                <div class="sparkline16-hd">
-                                    <div class="main-sparkline16-hd">
-                                        <h1>Location Details</h1>
-                                        <div class="sparkline16-outline-icon">
-                                            <span class="sparkline16-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline14-collapse-close"><i class="fa fa-times"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sparkline16-graph">
-                                    <div class="date-picker-inner">
-                                         <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-1">
-                                                    <label class="login2 pull-right pull-right-pro">Country</label>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <select class="form-control" id="country">
-	  
-													</select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-1">
-                                                    <label class="login2 pull-right pull-right-pro">State</label>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                     <select class="form-control" id="states">
-	  
-														</select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-1">
-                                                    <label class="login2 pull-right pull-right-pro">Area</label>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <select class="form-control" id="area-city">
-	  
-													</select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-1">
-                                                    <label class="login2 pull-right pull-right-pro">Latitude</label>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <input type="text" class="form-control" id="latitude" readonly="readonly" placeholder="Latitude" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-1">
-                                                    <label class="login2 pull-right pull-right-pro">Longtitude</label>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <input type="text" class="form-control" id="longtitude" readonly="readonly" placeholder="Longtitude" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                 </div>
-            </div>
-            <!-- Basic Form End-->
-			<div class="form-group-inner">
-               <div class="login-btn-inner">
-                   <div class="row">
-                       <div class="col-lg-5"></div>
-                       <div class="col-lg-6">
-                           <div class="login-horizental cancel-wp pull-left">
-                               <button class="btn btn-sm btn-primary login-submit-cs" id="addDiv" type="submit">Save New Device</button>
-                               <button class="btn btn-danger" type="submit">Cancel & Reset</button>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-        
+            </div>        
     </div>
     <!-- Footer Start-->
     <div class="footer-copyright-area">
@@ -1377,8 +1112,7 @@
             </div>
         </div>
     </div>
-    <!-- Chat Box End-->
-    <!-- jquery
+     <!-- jquery
 		============================================ -->
     <script src="/js/vendor/jquery-1.11.3.min.js"></script>
     <!-- bootstrap JS
@@ -1400,13 +1134,24 @@
 		============================================ -->
     <script src="/js/counterup/jquery.counterup.min.js"></script>
     <script src="/js/counterup/waypoints.min.js"></script>
-    <!-- modal JS
+    <!-- peity JS
 		============================================ -->
-    <script src="/js/modal-active.js"></script>
-    <!-- icheck JS
+    <script src="/js/peity/jquery.peity.min.js"></script>
+    <script src="/js/peity/peity-active.js"></script>
+    <!-- sparkline JS
 		============================================ -->
-    <script src="/js/icheck/icheck.min.js"></script>
-    <script src="/js/icheck/icheck-active.js"></script>
+    <script src="/js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/js/sparkline/sparkline-active.js"></script>
+    <!-- data table JS
+		============================================ -->
+    <script src="/js/data-table/bootstrap-table.js"></script>
+    <script src="/js/data-table/tableExport.js"></script>
+    <script src="/js/data-table/data-table-active.js"></script>
+    <script src="/js/data-table/bootstrap-table-editable.js"></script>
+    <script src="/js/data-table/bootstrap-editable.js"></script>
+    <script src="/js/data-table/bootstrap-table-resizable.js"></script>
+    <script src="/js/data-table/colResizable-1.5.source.js"></script>
+    <script src="/js/data-table/bootstrap-table-export.js"></script>
     <!-- main JS
 		============================================ -->
     <script src="/js/main.js"></script>

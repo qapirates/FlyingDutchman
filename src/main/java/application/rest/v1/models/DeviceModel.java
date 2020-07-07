@@ -2,32 +2,59 @@ package application.rest.v1.models;
 
 public class DeviceModel {
 
+	private int id;
 	private String guid;
-	private String mac_id;
-	private String device_name;
+	private String mac_Id;
+	private String device_Name;
 	private String country;
 	private String state;
 	private String area;
 	private String latitude;
 	private String longitude;
 	private String status;
+	private String lastupdatedby;
+	private String lastupdatedon;
 	
-	public DeviceModel() {
-		super();
+	
+	
+	public String getMac_Id() {
+		return mac_Id;
 	}
 
-	public DeviceModel(String guid, String mac_id, String device_name, String country, String state, String area,
-			String latitude, String longitude, String status) {
-		super();
-		this.guid = guid;
-		this.mac_id = mac_id;
-		this.device_name = device_name;
-		this.country = country;
-		this.state = state;
-		this.area = area;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.status = status;
+	public void setMac_Id(String mac_Id) {
+		this.mac_Id = mac_Id;
+	}
+
+	public String getLastupdatedby() {
+		return lastupdatedby;
+	}
+
+	public void setLastupdatedby(String lastupdatedby) {
+		this.lastupdatedby = lastupdatedby;
+	}
+
+	public String getLastupdatedon() {
+		return lastupdatedon;
+	}
+
+	public void setLastupdatedon(String lastupdatedon) {
+		this.lastupdatedon = lastupdatedon;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getOwner() {
+		return lastupdatedby;
+	}
+
+	public void setOwner(String owner) {
+		this.lastupdatedby = owner;
 	}
 
 	public String getGuid() {
@@ -39,19 +66,19 @@ public class DeviceModel {
 	}
 
 	public String getMac_id() {
-		return mac_id;
+		return mac_Id;
 	}
 
 	public void setMac_id(String mac_id) {
-		this.mac_id = mac_id;
+		this.mac_Id = mac_id;
 	}
 
-	public String getDevice_name() {
-		return device_name;
+	public String getDevice_Name() {
+		return device_Name;
 	}
 
-	public void setDevice_name(String device_name) {
-		this.device_name = device_name;
+	public void setDevice_Name(String device_name) {
+		this.device_Name = device_name;
 	}
 
 	public String getCountry() {
