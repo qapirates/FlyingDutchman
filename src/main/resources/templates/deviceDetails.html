@@ -111,24 +111,22 @@
      	        cache: false,
      	        timeout: 600000,
      	        success: function (data) {
-     	        	Swal.fire(
-     	        			  'Ypeeeeeeeee!',
-     	        			  'Device is added',
-     	        			  'success'
-     	        			)
-     	        	//$("#GUID").empty();
-     		     	$("#MAC_Id").val("");
-     		     	$("#Device_Id").val("");
-     		     	$("#Status").empty();
-     		     	$("#country").val("");
-     		     	$("#owner").empty();
-     		     	//$("#states").val("Active");
-     		     	$("#area-city").empty();
-     		     	$("#latitude").val("");
-     		     	$("#longtitude").val("");
-     		     	$("#addDiv").prop("disabled", false);
+     	        	Swal.fire({
+   	        		  icon: 'success',
+   	        		  title: 'Oops...',
+   	        		  text: 'Ypeeeeeeeeeeeeee!',
+   	        		  footer: 'Device is added to the list',
+   	        		  timer: 3500
+   	        		}),
+   	        		setTimeout(
+   	        			  function() 
+   	        			  {
+   	        				 location.reload(); 
+   	        			 }, 2000);
+     	        	
      	        },
      	        error: function (e) {
+     	        	
      	        	Swal.fire({
      	        		  icon: 'error',
      	        		  title: 'Oops...',

@@ -182,6 +182,11 @@
  		 	        			)
  		 		     	$("#updatespecific").prop("disabled", false);
  		 	        	$('#WarningModalhdbgcl').modal('toggle');
+ 		 	        	setTimeout(
+ 		   	        			  function() 
+ 		   	        			  {
+ 		   	        				 location.reload(); 
+ 		   	        			 }, 2000);
  		 	        	location.reload();
  		 	        },
  		 	        error: function (e) {
