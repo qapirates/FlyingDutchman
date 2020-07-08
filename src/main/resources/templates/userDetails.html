@@ -1047,151 +1047,26 @@
                                                     <th data-field="company">Alternative Number</th>
                                                     <th data-field="complete">Email</th>
                                                     <th data-field="task">Notification</th>
+                                                    <th data-field="task">Last Update By</th>
+                                                    <th data-field="task">Last Updation Time</th>
                                                     <th data-field="action">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <tr th:each="ddata : ${users}">
                                                     <td></td>
-                                                    <td>1</td>
-                                                    <td>Web Development</td>
-                                                    <td>admin@uttara.com</td>
-                                                    <td>+8801962067309</td>
-                                                    <td>Aber Ltd.</td>
-                                                    <td class="datatable-ct"><span class="pie">1/6</span>
-                                                    </td>
-                                                    <td>10%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>2</td>
-                                                    <td>Graphic Design</td>
-                                                    <td>fox@itpark.com</td>
-                                                    <td>+8801762067304</td>
-                                                    <td>Abitibi Inc.</td>
-                                                    <td class="datatable-ct"><span class="pie">230/360</span>
-                                                    </td>
-                                                    <td>70%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>3</td>
-                                                    <td>Software Development</td>
-                                                    <td>gumre@hash.com</td>
-                                                    <td>+8801862067308</td>
-                                                    <td>Acambis plc</td>
-                                                    <td class="datatable-ct"><span class="pie">0.42/1.461</span>
-                                                    </td>
-                                                    <td>5%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>4</td>
-                                                    <td>Woocommerce</td>
-                                                    <td>kyum@frok.com</td>
-                                                    <td>+8801962066547</td>
-                                                    <td>ACLN Ltd.</td>
-                                                    <td class="datatable-ct"><span class="pie">2,7</span>
-                                                    </td>
-                                                    <td>15%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>5</td>
-                                                    <td>Joomla</td>
-                                                    <td>jams@game.com</td>
-                                                    <td>+8801962098745</td>
-                                                    <td>ACS-Tech Ltd.</td>
-                                                    <td class="datatable-ct"><span class="pie">200,133</span>
-                                                    </td>
-                                                    <td>80%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>6</td>
-                                                    <td>Wordpress</td>
-                                                    <td>flat@yem.com</td>
-                                                    <td>+8801962254781</td>
-                                                    <td>ActFits.com Inc.</td>
-                                                    <td class="datatable-ct"><span class="pie">0.42,1.051</span>
-                                                    </td>
-                                                    <td>30%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>7</td>
-                                                    <td>Ecommerce</td>
-                                                    <td>hasan@wpm.com</td>
-                                                    <td>+8801962254863</td>
-                                                    <td>ActivCard S.A.</td>
-                                                    <td class="datatable-ct"><span class="pie">2,7</span>
-                                                    </td>
-                                                    <td>15%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>8</td>
-                                                    <td>Android Apps</td>
-                                                    <td>ATM@devep.com</td>
-                                                    <td>+8801962875469</td>
-                                                    <td>Adecco S.A.</td>
-                                                    <td class="datatable-ct"><span class="pie">2,7</span>
-                                                    </td>
-                                                    <td>15%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>9</td>
-                                                    <td>Prestashop</td>
-                                                    <td>presta@Prest.com</td>
-                                                    <td>+8801962067524</td>
-                                                    <td>AEGON N.V.</td>
-                                                    <td class="datatable-ct"><span class="pie">2,7</span>
-                                                    </td>
-                                                    <td>15%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>10</td>
-                                                    <td>Game Development</td>
-                                                    <td>Dev@game.com</td>
-                                                    <td>+8801962067457</td>
-                                                    <td>Aerco Ltd.</td>
-                                                    <td class="datatable-ct"><span class="pie">2,7</span>
-                                                    </td>
-                                                    <td>15%</td>
-                                                    <td class="datatable-ct"><i class="fa fa-check"></i>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-warning">Update</button>&nbsp&nbsp<button type="button" class="btn btn-danger">Delete</button></td>
-                                                </tr>
-                                                
+                                                    <td th:text="${ddata.id}" />
+                                                    <td th:text="${ddata.role}" />
+                                                    <td th:text="${ddata.name}" />
+                                                    <td>No Map Found On Json</td>
+                                                    <td th:text="${ddata.phoneNumber}" />
+                                                    <td th:text="${ddata.alternativePhoneNumber}" />
+                                                    <td th:text="${ddata.emailAddress}" />
+                                                    <td th:text="${ddata.notificationFrequency}" />
+                                                    <td th:text="${ddata.lastupdatedby}" />
+                                                    <td th:text="${ddata.lastupdatedon}" />
+                                                    <td><button type="button" onclick="populateModalEdit(this)" class="btn btn-warning">Edit</button>&nbsp&nbsp<button type="button" onclick="deleteConfermation(this)" class="btn btn-danger">Delete</button></td>
+                                                </tr>                                                
                                             </tbody>
                                         </table>
                                                 </div>

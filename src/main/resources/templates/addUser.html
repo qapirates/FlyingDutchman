@@ -90,22 +90,32 @@
    	        cache: false,
    	        timeout: 600000,
    	        success: function (data) {
-   	        	Swal.fire({
- 	        		  icon: 'success',
- 	        		  title: 'Ypeeeeeeeeeeeeee!',
- 	        		  text: 'Success',
- 	        		  footer: 'Device is added to the list',
- 	        		  timer: 3500
- 	        		}),
- 	        		setTimeout(
- 	        			  function() 
- 	        			  {
- 	        				 location.reload(); 
- 	        			 }, 2000);
+   	        	console.log("****"+data.role_Id);
+   	        	if(data.role_ID > 0){
+   	        		Swal.fire({
+   	        		  icon: 'success',
+   	        		  title: 'Ypeeeeeeeeeeeeee!',
+   	        		  text: 'Success',
+   	        		  footer: 'Device is added to the list',
+   	        		  timer: 3500
+   	        		})
+   	        	} else {
+   	        		Swal.fire({
+     	        		  icon: 'error',
+     	        		  title: 'Oops...',
+     	        		  text: 'Something went very wrong!',
+     	        		  footer: '<a href>Why do I have this issue?</a>'
+     	        		})
+   	        	};
+   	        	
+        		setTimeout(
+        			  function() 
+        			  {
+        				 location.reload(); 
+        			 }, 2000);
    	        	
    	        },
    	        error: function (e) {
-   	        	
    	        	Swal.fire({
    	        		  icon: 'error',
    	        		  title: 'Oops...',
@@ -1100,7 +1110,7 @@
                                                        <label class="login2 pull-right pull-right-pro">User_Name</label>
                                                    </div>
                                                    <div class="col-lg-12">
-                                                       <input autocomplete="off" type="text" class="form-control" id="username" placeholder="User Name" />
+                                                       <input autocomplete="off" type="text" class="form-control" id="username" placeholder="User Name" required="required" />
                                                    </div>
                                                </div>
                                                
@@ -1110,7 +1120,7 @@
                                                           <label class="login2 pull-right pull-right-pro">Phone_Number</label>
                                                       </div>
                                                       <div class="col-lg-12">
-                                                          <input type="text" autocomplete="off" class="form-control" id="phonenumber" placeholder="Phone Number" />
+                                                          <input type="text" autocomplete="off" class="form-control" id="phonenumber" placeholder="Phone Number" required="required" />
                                                       </div>
                                                   </div>
                                               </div>
@@ -1141,7 +1151,7 @@
                                                       <label class="login2 pull-right pull-right-pro">Alternative_Phone_Number</label>
                                                   </div>
                                                   <div class="col-lg-12">
-                                                      <input type="text" autocomplete="off" class="form-control" id="altphonenumber" placeholder="Alternative Phone Number" />
+                                                      <input type="text" autocomplete="off" class="form-control" id="altphonenumber" placeholder="Alternative Phone Number" required="required"/>
                                                   </div>
                                               </div>
                                               
@@ -1150,7 +1160,7 @@
                                                       <label class="login2 pull-right pull-right-pro">Email_Address</label>
                                                   </div>
                                                   <div class="col-lg-12">
-                                                      <input type="text" autocomplete="off" class="form-control" id="email" placeholder="Email" />
+                                                      <input type="text" autocomplete="off" class="form-control" id="email" placeholder="Email" required="required"/>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1158,7 +1168,7 @@
                                                       <label class="login2 pull-right pull-right-pro">Notification_Frequency</label>
                                                   </div>
                                                   <div class="col-lg-12">
-                                                      <input type="text" autocomplete="off" class="form-control" id="notification" placeholder="Notification Frequency" />
+                                                      <input type="text" autocomplete="off" class="form-control" id="notification" placeholder="Notification Frequency" required="required"/>
                                                   </div>
                                               </div>
                                             </div>
