@@ -24,8 +24,7 @@ public class RenderViews {
 
 	@GetMapping("/addNew")
 	public static String getView() {
-		
-		
+				
 		return "deviceDetails";
 	}
 
@@ -42,9 +41,18 @@ public class RenderViews {
 			e.printStackTrace();
 		}
 		
-
 		return "showDetails";
-
-
+	}
+	
+	@GetMapping("/showUser")
+	public static String showUser() {
+				
+		return "userDetails";
+	}
+	
+	@GetMapping("/addUser")
+	public static String addUser(Model model) {
+				
+		return "addUser";
 	}
 }
