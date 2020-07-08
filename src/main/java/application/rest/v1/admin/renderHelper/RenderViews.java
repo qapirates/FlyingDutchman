@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import application.rest.v1.models.DeviceModel;
+import application.rest.v1.models.Roles;
 import application.rest.v1.services.AdminOriginGetEntryService;
 
 @Controller
@@ -46,13 +47,24 @@ public class RenderViews {
 	
 	@GetMapping("/showUser")
 	public static String showUser() {
-				
+			
 		return "userDetails";
 	}
 	
 	@GetMapping("/addUser")
 	public static String addUser(Model model) {
-				
+		
+		String url = "https://piratesbay-chipper-roan-rs.eu-gb.mybluemix.net/api/Roles";
+		String jsondata =AdminOriginGetEntryService.getEntryElements(url);
+		System.err.println(jsondata);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			List<Roles> ppl2 = Arrays.asList(mapper.readValue(jsondata, Roles[].class));
+			model.addAttribute("roledata", ppl2);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
 		return "addUser";
 	}
 }

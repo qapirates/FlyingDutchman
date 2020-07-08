@@ -149,5 +149,53 @@ public class AdminOriginAddEntryService {
 		
 		return returnable;
 	}
+	
+	public static boolean contactCreateUserApi(int Role_Id, String Name, String PhoneNumber, String AlternativePhoneNumber, String EmailAddress, String NotificationFrequency) {
+
+		final String POST_PARAMS = "{\n" + "\"Role_Id\": "+Role_Id+"," +
+				"    \"Mac_ID\": \""+"Details not available"+"\",\r\n" +
+				"    \"Name\": \""+Name+"\",\r\n" +
+				"    \"PhoneNumber\": \""+PhoneNumber+"\",\r\n" +
+				"    \"AlternativePhoneNumber\": \""+AlternativePhoneNumber+"\",\r\n" +
+				"    \"EmailAddress\": \""+EmailAddress+"\",\r\n" +
+				"    \"NotificationFrequency\": \""+ NotificationFrequency +"\"\n}";
+		System.out.println(POST_PARAMS);
+		URL obj;
+		boolean returnable = true;
+		try {
+			obj = new URL("https://piratesbay-chipper-roan-rs.eu-gb.mybluemix.net/api/UserDetails");
+		    HttpURLConnection postConnection = (HttpURLConnection) obj.openConnection();
+		    postConnection.setRequestMethod("POST");
+//		    postConnection.setRequestProperty("userId", "a1bcdefgh");
+		    postConnection.setRequestProperty("Content-Type", "application/json");
+		    postConnection.setDoOutput(true);
+		    OutputStream os = postConnection.getOutputStream();
+		    os.write(POST_PARAMS.getBytes());
+		    os.flush();
+		    os.close();
+		    int responseCode = postConnection.getResponseCode();
+		    System.out.println("POST Response Code :  " + responseCode);
+		    System.out.println("POST Response Message : " + postConnection.getResponseMessage());
+		    if (responseCode == HttpURLConnection.HTTP_CREATED) { //success
+		        BufferedReader in = new BufferedReader(new InputStreamReader(
+		            postConnection.getInputStream()));
+		        String inputLine;
+		        StringBuffer response = new StringBuffer();
+		        while ((inputLine = in .readLine()) != null) {
+		            response.append(inputLine);
+		        } in .close();
+		        // print result
+		        System.out.println(response.toString());
+		    } else {
+		        System.out.println("POST NOT WORKED");
+		        returnable = false;
+		    }
+		} catch (IOException e) {
+			e.printStackTrace();
+			returnable = false;
+		}
+		
+		return returnable;
+	}
 
 }
