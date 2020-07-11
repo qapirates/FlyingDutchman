@@ -1,5 +1,8 @@
 package application.rest.v1.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DeviceModel {
 
 	private int id;
@@ -15,8 +18,50 @@ public class DeviceModel {
 	private String lastupdatedby;
 	private String lastupdatedon;
 	
+	private String color;
 	
+	private Parameters[] parameterValues;
 	
+
+	public DeviceModel() {
+		super();
+	}
+
+	public DeviceModel(int id, String device_Name, String country, String state, String area, String color, String lstUpdatedOn) {
+		super();
+		this.id = id;
+		this.device_Name = device_Name;
+		this.country = country;
+		this.state = state;
+		this.area = area;
+		this.color = color;
+		this.lastupdatedon = lstUpdatedOn;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public Parameters[] getParameterValues() {
+		return parameterValues;
+	}
+
+	public void setParameterValues(Parameters[] parameterValues) {
+		this.parameterValues = parameterValues;
+	}
+
+	public Parameters[] getParameters() {
+		return parameterValues;
+	}
+
+	public void setParameters(Parameters[] parameters) {
+		this.parameterValues = parameters;
+	}
+
 	public String getMac_Id() {
 		return mac_Id;
 	}

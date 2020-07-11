@@ -1,7 +1,0 @@
----
-applications:
-- name: FlyingDutchMan
-  random-route: true
-  memory: 32M
-  env:
-    SPRING_PROFILES_ACTIVE: cloud,mysql

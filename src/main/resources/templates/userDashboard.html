@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -98,7 +98,7 @@
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Home</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
                                 <a href="dashboard.html" class="dropdown-item">Home</a>
-                                <a href="dashboard-2.html" class="dropdown-item">Dashboard</a>
+                                <a href="/dutchman/dashboard" class="dropdown-item">Dashboard</a>
                                 <a href="analytics.html" class="dropdown-item">Analytics</a>
                             </div>
                         </li>
@@ -316,22 +316,25 @@
                                     <div class="basic-login-form-ad">
                                     <!-- Card -->
                                         <div class="row">
+                                        <!--  -->
                                         
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6" th:each="devicedit : ${eachdevicedetails}">
                                                <div class="courses-container">
 													<div class="course">
-														<div class="course-preview">
-															<h6>Kolkata Area</h6>
-															<h2>Demo Pi Device 1</h2>
-															<a href="#">View all chapters <i class="fas fa-chevron-right"></i></a>
+														<div class="course-preview" th:style="${devicedit.color} == 'Green' ? 'background: #03CB61' : 'background: #F22A54'">
+															<h6 th:text="${devicedit.area}" ></h6>
+															<h2 th:text="${devicedit.country}"></h2>
+															<br><br>
+															<h6 th:text="${devicedit.state}"> </h6>
 														</div>
 														<div class="course-info">
 															<div class="progress-container">
-																Status : <span class="badge badge-pill badge-success">Active</span>																
+																Status : <span class="badge badge-pill badge-success" th:text="${devicedit.color} == 'Green' ? 'Active' : 'Inactive'"></span>																
 															</div>
-															<h6>Parameters</h6>
-															<h2>Callbacks & Closures</h2>
-															<button onclick="openModal(this)" class="btn btn-primary">Continue</button>
+															LastUpdate : <h6 th:text="${devicedit.lastupdatedon}"></h6>
+															<h2 th:text="${devicedit.device_Name}"></h2>
+															<br>
+															<button onclick="openModal(this)" class="btn btn-primary">Detail View</button>
 														</div>
 													</div>
 												</div>
@@ -374,67 +377,7 @@
 												</div>
 												
                                             </div>
-                                         
-                                        
-                                            <div class="col-lg-6">
-                                               <div class="courses-container">
-													<div class="course">
-														<div class="course-preview">
-															<h6>Device</h6>
-															<h2>Demo Pi Device 1</h2>
-															<a href="#">View all chapters <i class="fas fa-chevron-right"></i></a>
-														</div>
-														<div class="course-info">
-															<div class="progress-container">
-																<div class="progress"></div>
-																<span class="progress-text"></span>
-															</div>
-															<h6>Chapter 4</h6>
-															<h2>Callbacks & Closures</h2>
-															<button class="btn">Continue</button>
-														</div>
-													</div>
-												</div>
-												
-												<!-- SOCIAL PANEL HTML -->
-												<div class="social-panel-container">
-													<div class="social-panel">
-														<p>Created with <i class="fa fa-heart"></i> by
-															<a target="_blank" href="https://florin-pop.com">Florin Pop</a></p>
-														<button class="close-btn"><i class="fas fa-times"></i></button>
-														<h4>Get in touch on</h4>
-														<ul>
-															<li>
-																<a href="https://www.patreon.com/florinpop17" target="_blank">
-																	<i class="fab fa-discord"></i>
-																</a>
-															</li>
-															<li>
-																<a href="https://twitter.com/florinpop1705" target="_blank">
-																	<i class="fab fa-twitter"></i>
-																</a>
-															</li>
-															<li>
-																<a href="https://linkedin.com/in/florinpop17" target="_blank">
-																	<i class="fab fa-linkedin"></i>
-																</a>
-															</li>
-															<li>
-																<a href="https://facebook.com/florinpop17" target="_blank">
-																	<i class="fab fa-facebook"></i>
-																</a>
-															</li>
-															<li>
-																<a href="https://instagram.com/florinpop17" target="_blank">
-																	<i class="fab fa-instagram"></i>
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-												
-                                            </div>
-                                            
+                                         <!--  -->                                            
                                         </div>
                                         <!-- Card -->
                                     </div>
@@ -511,10 +454,138 @@
     <!-- Slider -->
     <div id="mySidenav" class="sidenav">
 	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	  <a href="#">About</a>
-	  <a href="#">Services</a>
-	  <a href="#">Clients</a>
-	  <a href="#">Contact</a>
+	  <div class="basic-form-area mg-b-15">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-7" >
+                            <div class="analysis-rounded-area">
+				                <div class="container-fluid">
+				                    <div class="row">
+				                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				                            <div class="analytics-rounded ant-res-b-30 shadow-reset">
+				                                <div class="analytics-rounded-content">
+				                                    <h5>Percentage distribution</h5>
+				                                    <h2><span class="counter">60</span>/20</h2>
+				                                    <div class="text-center">
+				                                        <div id="sparkline51"></div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				                            <div class="analytics-rounded ant-res-b-30 shadow-reset">
+				                                <div class="analytics-rounded-content">
+				                                    <h5>Percentage division</h5>
+				                                    <h2><span class="counter">150</span>/<span class="counter">54</span></h2>
+				                                    <div class="text-center">
+				                                        <div id="sparkline52"></div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				                            <div class="analytics-rounded ant-res-b-30 ant-res-b2-30 shadow-reset">
+				                                <div class="analytics-rounded-content">
+				                                    <h5>Percentage Counting</h5>
+				                                    <h2>5685/211</h2>
+				                                    <div class="text-center">
+				                                        <div id="sparkline53"></div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				                            <div class="analytics-rounded shadow-reset">
+				                                <div class="analytics-rounded-content">
+				                                    <h5>Percentage Sequence</h5>
+				                                    <h2>2400/32</h2>
+				                                    <div class="text-center">
+				                                        <div id="sparkline54"></div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="sparkline9-list shadow-reset">
+                                <div class="sparkline9-hd">
+                                    <div class="main-sparkline9-hd">
+                                        <h1>Horizontal Login <span class="basic-ds-n">Form</span></h1>
+                                        <div class="sparkline9-outline-icon">
+                                            <span class="sparkline9-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                            <span><i class="fa fa-wrench"></i></span>
+                                            <span class="sparkline9-collapse-close"><i class="fa fa-times"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline9-graph">
+                                    <div class="basic-login-form-ad">
+                                        
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="basic-login-inner">
+                                                    <h3>Sign In</h3>
+                                                    <p>Register User can get sign in from here</p>
+                                                    <form action="#">
+                                                        <div class="form-group-inner">
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <label class="login2">Select Date Range</label>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="col-lg-6">
+                                                                    	<input type="date">
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                    	<input type="date">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group-inner">
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <label class="login2">Select Parameter</label>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <select class="select2_demo_3 form-control">
+				                                                        <option>Select</option>
+				                                                        <option value="Bahamas">Temperature</option>
+				                                                        <option value="Bahrain">PH Level</option>
+				                                                        <option value="Bangladesh">Partical Level</option>
+				                                                        <option value="Barbados">Oxygen Level</option>
+				                                                        <option value="Belarus">Salinity</option>
+				                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="login-btn-inner">
+                                                            <div class="row"> </div>
+                                                            <br><br><br>
+                                                            <div class="row">
+                                                                <div class="col-lg-4"></div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="login-horizental">
+                                                                        <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Find Result</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+           </div>
+       </div>
+                    
 	</div>
     <!-- jquery
 		============================================ -->

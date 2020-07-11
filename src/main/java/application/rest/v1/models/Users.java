@@ -1,5 +1,8 @@
 package application.rest.v1.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Users {
 
 	private int id;
@@ -13,6 +16,26 @@ public class Users {
     private String lastupdatedby;
     private String lastupdatedon;
     
+    private DeviceModel[] deviceDetail;
+    private int deviceCount;
+    
+    
+    
+	public int getDeviceCount() {
+		return deviceCount;
+	}
+	public void setDeviceCount(int deviceCount) {
+		this.deviceCount = deviceCount;
+	}
+	
+	
+	
+	public DeviceModel[] getDeviceDetail() {
+		return deviceDetail;
+	}
+	public void setDeviceDetail(DeviceModel[] deviceDetail) {
+		this.deviceDetail = deviceDetail;
+	}
 	public int getId() {
 		return id;
 	}
