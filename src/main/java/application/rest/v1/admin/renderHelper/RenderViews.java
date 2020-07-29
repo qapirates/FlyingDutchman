@@ -67,7 +67,7 @@ public class RenderViews {
 		
 		String url = "https://piratesbay-chipper-roan-rs.eu-gb.mybluemix.net/api/Roles";
 		String jsondata =AdminOriginGetEntryService.getEntryElements(url);
-		System.err.println(jsondata);
+//		System.err.println(jsondata);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			List<Roles> ppl2 = Arrays.asList(mapper.readValue(jsondata, Roles[].class));

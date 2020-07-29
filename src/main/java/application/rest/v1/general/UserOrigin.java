@@ -89,16 +89,22 @@ public class UserOrigin {
 			String newLabel = labels.substring(0, labels.length()-1);
 			String newValue = values.substring(0, values.length()-1);
 			String unit = "";
+			String hexcolor = "";
 			if(paramId == 1) {
 				unit = "\u00B0C";
+				hexcolor = "#6A6A53";
 			} else if (paramId == 2) {
 				unit = "pH";
+				hexcolor = "#0AACF7";
 			} else if (paramId == 3) {
 				unit = "mg/Lt";
+				hexcolor = "#76196F";
 			} else if (paramId == 4) {
 				unit = "mg/Lt";
+				hexcolor = "#05F891";
 			} else if (paramId == 5){
 				unit = "mg/Lt";
+				hexcolor = "#EC11EC";
 			}
 			String chart = "\"chart\": {\r\n" + 
 					"        \"theme\": \"fusion\",\r\n" + 
@@ -110,6 +116,7 @@ public class UserOrigin {
 					"        \"lineThickness\": \"3\",\r\n" + 
 					"        \"formatNumberScale\": \"0\",\r\n"+
 					"        \"exportEnabled\": \"1\","+
+					"         \"lineColor\":\""+hexcolor+"\",\r\n"+
 					"        \"flatScrollBars\": \"1\",\r\n" + 
 					"        \"exportFileName\":\""+paramName+" Report"+ myObj +"\","+
 					"        \"scrollheight\": \"10\",\r\n" + 
@@ -185,41 +192,5 @@ public class UserOrigin {
 		return actualObj;
 	}
 
-	/*
-	 * Async Last value updater
-	 * */
-	@GetMapping("/lastUpdatedValue/{deviceid}")
-	public @ResponseBody JsonNode getTableDetails(@PathVariable("deviceid") String deviceid) {
-
-		String url = "https://piratesbay-chipper-roan-rs.eu-gb.mybluemix.net/api/UserView/1";
-		String jsondata =AdminOriginGetEntryService.getEntryElements(url);		
-
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectMapper Obj = new ObjectMapper(); 
-		mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-		JsonNode actualObj = null;
-		try {
-			List<Users> ppl2 = Arrays.asList(mapper.readValue(jsondata, Users[].class));
-			//System.err.println("ppl2 : " + ppl2);
-			for (Users users : ppl2) {
-				DeviceModel[] div = users.getDeviceDetail();
-				for (int i = 0; i < div.length; i++) {
-					if (div[i].getId() == Integer.parseInt(deviceid)) {
-						Parameters[] params = div[i].getParameterValues();
-						for (int j = 0; j < params.length; j++) {
-							//Parameters parameters = new Parameters(params[i].getName(),params[i].getLastValue(),params[i].getInputTime(),params[i].getColor(),params[i].getAction(),params[i].getCorrectiveAction(),params[i].getUnit());
-							//							String jsonStr = Obj.writeValueAsString(parameters);
-						}
-					}
-
-
-				}
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return actualObj;
-	}
+	
 }

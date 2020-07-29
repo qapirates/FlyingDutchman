@@ -55,9 +55,10 @@ public class GeneralViewRenderHelper {
 				for (DeviceModel devselement : devs) {
 					// front end device details
 					//List<Parameters> parameterModelHolder =Arrays.asList(devselement.getParameterValues());
-					System.err.println();
+//					System.err.println();
 					devicemodelHolder.add(new DeviceModel(devselement.getId(), devselement.getDevice_Name(), devselement.getCountry(), devselement.getState(), devselement.getArea(), devselement.getColor(),
-							devselement.getLastupdatedon()));
+							devselement.getLastupdatedon(), devselement.getParameterValues()));
+					
 				}
 			}
 			
@@ -94,7 +95,7 @@ public class GeneralViewRenderHelper {
 			 * Create Rows
 			 * */
 			List<Map<String, String>> rows = new ArrayList<>();
-			System.err.println(TABLEHEADER);
+//			System.err.println(TABLEHEADER);
 			String parsed = mapper1.readTree(entries).toString();
 			List<IndevidualDeviceMain> analysis = Arrays.asList(mapper.readValue(parsed, IndevidualDeviceMain[].class));
 			for (IndevidualDeviceMain im : analysis) {				

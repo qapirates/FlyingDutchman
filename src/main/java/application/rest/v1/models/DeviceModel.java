@@ -1,5 +1,7 @@
 package application.rest.v1.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,17 +19,17 @@ public class DeviceModel {
 	private String status;
 	private String lastupdatedby;
 	private String lastupdatedon;
-	
+
 	private String color;
-	
-	private Parameters[] parameterValues;
-	
+
+	private List<Parameters> parameterValues;
+
 
 	public DeviceModel() {
 		super();
 	}
 
-	public DeviceModel(int id, String device_Name, String country, String state, String area, String color, String lstUpdatedOn) {
+	public DeviceModel(int id, String device_Name, String country, String state, String area, String color, String lstUpdatedOn, List<Parameters> parameterValues) {
 		super();
 		this.id = id;
 		this.device_Name = device_Name;
@@ -36,11 +38,13 @@ public class DeviceModel {
 		this.area = area;
 		this.color = color;
 		this.lastupdatedon = lstUpdatedOn;
+		this.parameterValues = parameterValues;
 	}
-	
+
+
 	public DeviceModel(int id, String guid, String mac_Id, String device_Name, String country, String state,
 			String area, String latitude, String longitude, String status, String lastupdatedby, String lastupdatedon,
-			String color, Parameters[] parameterValues) {
+			String color, List<Parameters> parameterValues) {
 		super();
 		this.id = id;
 		this.guid = guid;
@@ -66,20 +70,14 @@ public class DeviceModel {
 		this.color = color;
 	}
 
-	public Parameters[] getParameterValues() {
+	
+
+	public List<Parameters> getParameterValues() {
 		return parameterValues;
 	}
 
-	public void setParameterValues(Parameters[] parameterValues) {
+	public void setParameterValues(List<Parameters> parameterValues) {
 		this.parameterValues = parameterValues;
-	}
-
-	public Parameters[] getParameters() {
-		return parameterValues;
-	}
-
-	public void setParameters(Parameters[] parameters) {
-		this.parameterValues = parameters;
 	}
 
 	public String getMac_Id() {
@@ -193,7 +191,7 @@ public class DeviceModel {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
+
+
+
 }

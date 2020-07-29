@@ -95,7 +95,8 @@
  	        cache: false,
  	        timeout: 600000,
  	        success: function (data) {
- 	        	console.log(data);
+ 	        	var v = data;
+ 	        	console.log(v);
  	        },
  	        error: function (e) {
  	        	console.log('ERROR');
@@ -361,19 +362,15 @@
 														</div>
 														<div class="course-info">
 															<div class="progress-container">
-																Status : <span class="badge badge-pill badge-success" th:style="${devicedit.color} == 'Green' ? 'background: #03CB61' : 'background: #D6002D'" th:text="${devicedit.color} == 'Green' ? 'Active' : 'Inactive'"></span>																
+																<b>Status :</b> <span class="badge badge-pill badge-success" th:style="${devicedit.color} == 'Green' ? 'background: #03CB61' : 'background: #D6002D'" th:text="${devicedit.color} == 'Green' ? 'Active' : 'Inactive'"></span>																
 															</div>
-															LastUpdate : <h6 th:text="${devicedit.lastupdatedon}"></h6>
-															<h2 th:text="${devicedit.device_Name}"></h2>
-															<script th:inline="javascript">var nameJs = [[${devicedit.id}]];asyncLoader(nameJs);</script>
-															<!-- <input type="hidden" id="currentId" th:onload="asyncLoader(nameJs);"> -->
+															<b>LastUpdate :</b> <h6 th:text="${devicedit.lastupdatedon}"></h6>
+															<h2><b th:text="${devicedit.device_Name}"></b></h2>
+															
 															<div class="col-lg-2">
-																<span class="badge badge-primary">Primary</span>
-																<span class="badge badge-primary">Primary</span>
-																<span class="badge badge-primary">Primary</span>
-																<span class="badge badge-primary">Primary</span>
-																<span class="badge badge-primary">Primary</span>
+																<span class="badge badge-pill badge-success" th:each="d : ${devicedit.parameterValues}" th:styleappend="'background-color: ' + ${d.color}+ ';font-size: 12px;'" th:text="${d.name  + '  :    ' + d.lastValue}"></span>
 															</div>
+															
 															<br>
 															<a th:href="@{/dutchman/details(device=${devicedit.id})}"><button class="btn btn-primary pickerMaster">Detail View</button></a>
 														</div>
