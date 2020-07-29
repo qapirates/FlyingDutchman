@@ -11,6 +11,7 @@ public class Parameters {
 	private String color;
 	private String action;
 	private String correctiveAction;
+	private String unit;
 		
 	
 	public Parameters() {
@@ -19,7 +20,6 @@ public class Parameters {
 	
 	public Parameters(String name, double lastValue, String inputTime, String color, String action,
 			String correctiveAction) {
-		super();
 		this.name = name;
 		this.lastValue = lastValue;
 		this.inputTime = inputTime;
@@ -27,8 +27,17 @@ public class Parameters {
 		this.action = action;
 		this.correctiveAction = correctiveAction;
 	}
-
-
+	
+	public Parameters(String name, double lastValue, String inputTime, String color, String action,
+			String correctiveAction, String unit) {
+		this.name = name;
+		this.lastValue = lastValue;
+		this.inputTime = inputTime;
+		this.color = color;
+		this.action = action;
+		this.correctiveAction = correctiveAction;
+		this.unit = unit;
+	}
 
 	public String getName() {
 		return name;
@@ -65,6 +74,14 @@ public class Parameters {
 	}
 	public void setCorrectiveAction(String correctiveAction) {
 		this.correctiveAction = correctiveAction;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	
 	

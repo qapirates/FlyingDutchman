@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,9 @@ import application.rest.v1.services.AdminOriginGetEntryService;
 @Controller
 @RequestMapping("/dutchman")
 public class GeneralViewRenderHelper {
-	
+	/*
+	 * Hard Coaded For user 1 
+	 * */
 	
 	@GetMapping("/dashboard")
 	public static String getTableDetails(Model model) {
@@ -51,6 +54,8 @@ public class GeneralViewRenderHelper {
 				DeviceModel[] devs = users.getDeviceDetail();
 				for (DeviceModel devselement : devs) {
 					// front end device details
+					//List<Parameters> parameterModelHolder =Arrays.asList(devselement.getParameterValues());
+					System.err.println();
 					devicemodelHolder.add(new DeviceModel(devselement.getId(), devselement.getDevice_Name(), devselement.getCountry(), devselement.getState(), devselement.getArea(), devselement.getColor(),
 							devselement.getLastupdatedon()));
 				}
@@ -65,7 +70,7 @@ public class GeneralViewRenderHelper {
 	}
 	
 	@GetMapping("/details")
-	public static String getIndevidualDeviceDetails(@RequestParam(name = "device") String device,  Model model) {
+	public static String getIndevidualDeviceDetails(@RequestParam(name = "device") String device,  ModelMap model) {
 		String url = "https://piratesbay-chipper-roan-rs.eu-gb.mybluemix.net/api/ValuesByDevice/"+device;
 		String jsondata =AdminOriginGetEntryService.getEntryElements(url);
 		
@@ -80,10 +85,11 @@ public class GeneralViewRenderHelper {
 			JsonNode actualObj = mapper.readTree(jsondata);
 			String entries = actualObj.get("entries").toString();
 			String parsedParameterList = actualObj.get("parameterNames").toString().substring(1, actualObj.get("parameterNames").toString().length()-1);
+			String headWithOutQuot = parsedParameterList.replace("\"", " ");
 			/*
 			 * Create Header
 			 * */
-			List<String> TABLEHEADER = Arrays.asList(parsedParameterList);
+			List<String> TABLEHEADER = Arrays.asList(headWithOutQuot);
 			/*
 			 * Create Rows
 			 * */
@@ -102,7 +108,7 @@ public class GeneralViewRenderHelper {
 				indevidualAnalysis.add(new IndevidualDeviceHolder(im.getDatetime(), parameter));
 			}
 
-			
+			//model.addAttribute("header", TABLEHEADER);
 			model.addAttribute("indevidual", indevidualAnalysis);
 					
 		} catch (JsonProcessingException e) {
@@ -112,4 +118,5 @@ public class GeneralViewRenderHelper {
 		
 		return "indevidualDeviceDetails";
 	}
+	
 }

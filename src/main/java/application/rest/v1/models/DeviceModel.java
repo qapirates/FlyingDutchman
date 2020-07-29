@@ -37,6 +37,26 @@ public class DeviceModel {
 		this.color = color;
 		this.lastupdatedon = lstUpdatedOn;
 	}
+	
+	public DeviceModel(int id, String guid, String mac_Id, String device_Name, String country, String state,
+			String area, String latitude, String longitude, String status, String lastupdatedby, String lastupdatedon,
+			String color, Parameters[] parameterValues) {
+		super();
+		this.id = id;
+		this.guid = guid;
+		this.mac_Id = mac_Id;
+		this.device_Name = device_Name;
+		this.country = country;
+		this.state = state;
+		this.area = area;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.status = status;
+		this.lastupdatedby = lastupdatedby;
+		this.lastupdatedon = lastupdatedon;
+		this.color = color;
+		this.parameterValues = parameterValues;
+	}
 
 	public String getColor() {
 		return color;

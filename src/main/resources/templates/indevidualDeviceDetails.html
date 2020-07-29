@@ -62,29 +62,133 @@
 		============================================ -->
     <link rel="stylesheet" href="/css/data-table/bootstrap-table.css">
     <link rel="stylesheet" href="/css/data-table/bootstrap-editable.css">
+    <!-- Fusion Charts
+		============================================ -->
+    <script type="text/javascript" src="/js/Fusion/fusioncharts.js"></script>
+    <script type="text/javascript" src="/js/Fusion/themes/fusioncharts.theme.fusion.js"></script>
     
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-   
+
     <script>
     	
     	// CardId
     	
    		$( document ).ready(function() {
    	   		$(".pickerMaster").click(function() {
-	   	   			_divid = $(this).closest("div.course").find("input[name='hiddenDiviceId']").val();
-	   	         	 console.log(_divid);
-	   	         	
+  	   			_divid = $(this).closest("div.course").find("input[name='hiddenDiviceId']").val();
+  	         	 console.log(_divid);
    	   		});
    	       	 
    	    });
     	
-   	 
+   	 // Load Parameter
+   	 $( document ).ready(function() {
+   		 /*
+   		 	get device id from URL
+   		 */
+   		let searchParams = new URLSearchParams(window.location.search);
+   		let param = searchParams.get('device');
+   		console.log(param); // Device id
+   		
+   		$.ajax({
+	 	        type: "GET",
+	 	        contentType: "application/json",
+	 	        url: "/userorigin/parameterDetails/"+param,
+	 	        //data: JSON.stringify(search),
+	 	        dataType: 'json',
+	 	        cache: false,
+	 	        timeout: 600000,
+	 	        success: function (data) {
+	 	        	/*
+	 	        		Returns available parameters => create that musch Divs dynamically 
+	 	        	*/
+	 	        	$.each(data, function(i, item) {
+	 	        	   //alert(data[i].PageName);
+	 	        	   //console.log(item);
+	 	        	   createDiv(item);
+	 	        	});
+	 	        	
+	 	        },
+	 	        error: function (e) {
+	 	        	console.log("Error");
+	 	        }
+	 	    });
+   	 });
     </script>
     <script>
     	var _divid = 0;
+    	/*
+    		Dynamic Graph creator
+    	*/
+    	var str = window.location.href;
+    	//console.log("xx : "+ x)
+    	var deviceId = str.substring(str.indexOf("=")+1, str.length);
+    	function createDiv(paramName){
+    		var cont = "<div id='"+paramName+"'>";
+    		//console.log("Cont : "+cont)
+    		var divBody =  '<div class="col-lg-6">'+
+            '<div class="sparkline14-list shadow-reset mg-t-30">'+
+                '<div class="sparkline14-hd">'+
+                    '<div class="main-sparkline14-hd">'+
+                        '<h1>'+paramName+'</h1>'+
+                        '<div class="sparkline14-outline-icon">'+
+                            '<span class="sparkline14-collapse-link"><i class="fa fa-chevron-up"></i></span>'+
+                            '<span><i class="fa fa-wrench"></i></span>'+
+                            '<span class="sparkline14-collapse-close"><i class="fa fa-times"></i></span>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="sparkline14-graph">'+
+                    '<div class="row">'+
+                        '<div class="col-lg-12">'+
+                            cont+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
+        
+   		$("#appandable").append(divBody);
+   		
+    		var filterType = "Daily";
+    		$.ajax({
+	 	       type: "GET",
+	 	        contentType: "application/json",
+	 	        url: "/userorigin/detailGraphData/"+paramName+"/"+filterType+"/"+deviceId,
+	 	        dataType: 'json',
+	 	        cache: false,
+	 	        timeout: 600000,
+	 	        success: function (response) {
+	 	        	var json1 = JSON.stringify(response); 
+	 	        	//console.log(json1);
+	 	        	var renderObject = json1.substring(1, json1.length-1);
+	 	        	//console.log("c:" + renderObject);
+	 	        	/*
+	 	        		Returns Fusion Chart Data
+	 	        	*/
+	 	        	FusionCharts.ready(function() {
+	 	        		  var salesChart = new FusionCharts({
+	 	        			 type: 'scrollline2d',
+	 	        		    dataFormat: 'json',
+	 	        		    renderAt: paramName,
+	 	        		    width: '700',
+	 	        		    height: '400',
+	 	        		    dataSource: response
+	 	        		  }).render();
+	 	        	});
+	 	        	//console.log(jsons);
+	 	        	 	        	
+	 	        },
+	 	        error: function (e) {
+	 	        	console.log("Error" + e);
+	 	        }
+	 	    });
+    		
+    		
+    	}
     </script>
 
 <body class="materialdesign">
@@ -98,8 +202,8 @@
                 <div class="sidebar-header">
                     <a href="#"><img src="img/message/1.jpg" alt="" />
                     </a>
-                    <h3>Andrar Son</h3>
-                    <p>Developer</p>
+                    <h3> Flying Dutchman</h3>
+                    
                     <strong>AP+</strong>
                 </div>
                 <div class="left-custom-menu-adp-wrap">
@@ -263,7 +367,7 @@
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Accordion</span>
+                                            <li><span class="bread-blod">Device Details</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -274,156 +378,7 @@
                 </div>
             </div>
             <!-- Breadcome End-->
-            <!-- Mobile Menu start -->
-            <div class="mobile-menu-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="mobile-menu">
-                                <nav id="dropdown">
-                                    <ul class="mobile-menu-nav">
-                                        <li><a data-toggle="collapse" data-target="#Charts" href="#">Home <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul class="collapse dropdown-header-top">
-                                                <li><a href="dashboard.html">Dashboard v.1</a>
-                                                </li>
-                                                <li><a href="dashboard-2.html">Dashboard v.2</a>
-                                                </li>
-                                                <li><a href="analytics.html">Analytics</a>
-                                                </li>
-                                                <li><a href="widgets.html">Widgets</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#demo" href="#">Mailbox <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="demo" class="collapse dropdown-header-top">
-                                                <li><a href="inbox.html">Inbox</a>
-                                                </li>
-                                                <li><a href="view-mail.html">View Mail</a>
-                                                </li>
-                                                <li><a href="compose-mail.html">Compose Mail</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#others" href="#">Miscellaneous <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="others" class="collapse dropdown-header-top">
-                                                <li><a href="profile.html">Profile</a>
-                                                </li>
-                                                <li><a href="contact-client.html">Contact Client</a>
-                                                </li>
-                                                <li><a href="contact-client-v.1.html">Contact Client v.1</a>
-                                                </li>
-                                                <li><a href="project-list.html">Project List</a>
-                                                </li>
-                                                <li><a href="project-details.html">Project Details</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">Interface <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="Miscellaneousmob" class="collapse dropdown-header-top">
-                                                <li><a href="google-map.html">Google Map</a>
-                                                </li>
-                                                <li><a href="data-maps.html">Data Maps</a>
-                                                </li>
-                                                <li><a href="pdf-viewer.html">Pdf Viewer</a>
-                                                </li>
-                                                <li><a href="x-editable.html">X-Editable</a>
-                                                </li>
-                                                <li><a href="code-editor.html">Code Editor</a>
-                                                </li>
-                                                <li><a href="tree-view.html">Tree View</a>
-                                                </li>
-                                                <li><a href="preloader.html">Preloader</a>
-                                                </li>
-                                                <li><a href="images-cropper.html">Images Cropper</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#Chartsmob" href="#">Charts <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="Chartsmob" class="collapse dropdown-header-top">
-                                                <li><a href="bar-charts.html">Bar Charts</a>
-                                                </li>
-                                                <li><a href="line-charts.html">Line Charts</a>
-                                                </li>
-                                                <li><a href="area-charts.html">Area Charts</a>
-                                                </li>
-                                                <li><a href="rounded-chart.html">Rounded Charts</a>
-                                                </li>
-                                                <li><a href="c3.html">C3 Charts</a>
-                                                </li>
-                                                <li><a href="sparkline.html">Sparkline Charts</a>
-                                                </li>
-                                                <li><a href="peity.html">Peity Charts</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#Tablesmob" href="#">Tables <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="Tablesmob" class="collapse dropdown-header-top">
-                                                <li><a href="static-table.html">Static Table</a>
-                                                </li>
-                                                <li><a href="data-table.html">Data Table</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#formsmob" href="#">Forms <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="formsmob" class="collapse dropdown-header-top">
-                                                <li><a href="basic-form-element.html">Basic Form Elements</a>
-                                                </li>
-                                                <li><a href="advance-form-element.html">Advanced Form Elements</a>
-                                                </li>
-                                                <li><a href="password-meter.html">Password Meter</a>
-                                                </li>
-                                                <li><a href="multi-upload.html">Multi Upload</a>
-                                                </li>
-                                                <li><a href="tinymc.html">Text Editor</a>
-                                                </li>
-                                                <li><a href="dual-list-box.html">Dual List Box</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#Appviewsmob" href="#">App views <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="Appviewsmob" class="collapse dropdown-header-top">
-                                                <li><a href="basic-form-element.html">Basic Form Elements</a>
-                                                </li>
-                                                <li><a href="advance-form-element.html">Advanced Form Elements</a>
-                                                </li>
-                                                <li><a href="password-meter.html">Password Meter</a>
-                                                </li>
-                                                <li><a href="multi-upload.html">Multi Upload</a>
-                                                </li>
-                                                <li><a href="tinymc.html">Text Editor</a>
-                                                </li>
-                                                <li><a href="dual-list-box.html">Dual List Box</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#Pagemob" href="#">Pages <span class="admin-project-icon adminpro-icon adminpro-down-arrow"></span></a>
-                                            <ul id="Pagemob" class="collapse dropdown-header-top">
-                                                <li><a href="login.html">Login</a>
-                                                </li>
-                                                <li><a href="register.html">Register</a>
-                                                </li>
-                                                <li><a href="captcha.html">Captcha</a>
-                                                </li>
-                                                <li><a href="checkout.html">Checkout</a>
-                                                </li>
-                                                <li><a href="contact.html">Contacts</a>
-                                                </li>
-                                                <li><a href="review.html">Review</a>
-                                                </li>
-                                                <li><a href="order.html">Order</a>
-                                                </li>
-                                                <li><a href="comment.html">Comment</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Mobile Menu end -->
+           
             <!-- Breadcome start-->
             <div class="breadcome-area mg-b-30 des-none">
                 <div class="container-fluid">
@@ -457,56 +412,16 @@
             <!-- Basic Form Start -->
             <div class="advanced-form-area mg-b-15">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="sparkline14-list shadow-reset mg-t-30">
-                                <div class="sparkline14-hd">
-                                    <div class="main-sparkline14-hd">
-                                        <h1>Color Picker</h1>
-                                        <div class="sparkline14-outline-icon">
-                                            <span class="sparkline14-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline14-collapse-close"><i class="fa fa-times"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sparkline14-graph">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="sparkline14-list shadow-reset mg-t-30">
-                                <div class="sparkline14-hd">
-                                    <div class="main-sparkline14-hd">
-                                        <h1>Color Picker</h1>
-                                        <div class="sparkline14-outline-icon">
-                                            <span class="sparkline14-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline14-collapse-close"><i class="fa fa-times"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sparkline14-graph">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Dynamic Graph renders here -->
+                    <div class="row" id="appandable">
+                        
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="sparkline15-list shadow-reset mg-t-30">
                                 <div class="sparkline15-hd">
                                     <div class="main-sparkline15-hd">
-                                        <h1>TouchSpin</h1>
+                                        <h1>Detail Value Table</h1>
                                         <div class="sparkline15-outline-icon">
                                             <span class="sparkline15-collapse-link"><i class="fa fa-chevron-up"></i></span>
                                             <span><i class="fa fa-wrench"></i></span>
@@ -516,6 +431,7 @@
                                 </div>
                                 <div class="sparkline15-graph">
                                     <div class="row">
+                                       <div class="datatable-dashv1-list custom-datatable-overright">
                                         <div class="col-lg-12">
                                             <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                             <thead>
@@ -533,11 +449,12 @@
                                                 <tr th:each="ddata : ${indevidual}">
                                                 	<td></td>
                                                     <td th:text="${ddata.datetime}" />
-                                                    <td th:each="item: ${#strings.arraySplit(ddata.parameter, ',')}"  th:text="${item}"/>
+                                                    <td th:each="i: ${#strings.arraySplit(ddata.parameter, ',')}"  th:text="${i}"/>
                                                     
                                                 </tr> 
                                             </tbody>
                                         </table>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -556,7 +473,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer-copy-right">
-                        <p>Copyright &#169; 2018 Colorlib All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                        <p>Copyright &#169; 2020 Flying Dutchman All rights reserved. Template by <a href="">Dutchman</a>.</p>
                     </div>
                 </div>
             </div>
@@ -564,7 +481,7 @@
     </div>
     <!-- Footer End-->
     <!-- Chat Box Start-->
-    <div class="chat-list-wrap">
+    <!-- <div class="chat-list-wrap">
         <div class="chat-list-adminpro">
             <div class="chat-button">
                 <span data-toggle="collapse" data-target="#chat" class="chat-icon-link"><i class="fa fa-comments"></i></span>
@@ -599,7 +516,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- jquery
 		============================================ -->
     <script src="/js/vendor/jquery-1.11.3.min.js"></script>
