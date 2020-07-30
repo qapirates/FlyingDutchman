@@ -67,10 +67,39 @@
     <link rel="stylesheet" href="/css/data-table/bootstrap-table.css">
     <link rel="stylesheet" href="/css/data-table/bootstrap-editable.css">
     
+       
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <style>
+    	.goog-logo-link {
+		   display:none !important;
+		}
+		
+		.goog-te-gadget {
+		   color: transparent !important;
+		}
+		
+		.goog-te-gadget .goog-te-combo {
+		   color: black !important;
+		}
+		
+		.goog-te-banner-frame.skiptranslate {
+		    display: none !important;
+		    } 
+		body {
+		    top: 0px !important; 
+		    }
+    </style>
+    
+    <script type="text/javascript">
+	function googleTranslateElementInit() {
+	  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+	}
+	</script>
+    
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
    
     <script>
     	
@@ -131,17 +160,17 @@
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
                                 <a href="dashboard.html" class="dropdown-item">Home</a>
                                 <a href="/dutchman/dashboard" class="dropdown-item">Dashboard</a>
-                                <a href="analytics.html" class="dropdown-item">Analytics</a>
+                                <!-- <a href="analytics.html" class="dropdown-item">Analytics</a> -->
                             </div>
                         </li>
                         <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-phone" aria-hidden="true"></i> <span class="mini-dn">Services</span> <span class="indicator-right-menu mini-dn"></span></a>
                             
                         </li>
-                        <li class="nav-item">
+                       <!-- <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-tachometer" aria-hidden="true"></i> <span class="mini-dn">Installation</span> <span class="indicator-right-menu mini-dn"></span></a>
                             
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -170,7 +199,7 @@
                                         </li>
                                         <li class="nav-item"><a href="#" class="nav-link">Services</a>
                                         </li>
-                                        <li class="nav-item"><a href="#" class="nav-link">Support</a>
+                                        <!-- <li class="nav-item"><a href="#" class="nav-link">Support</a> -->
                                         </li>
                                     </ul>
                                 </div>
@@ -247,11 +276,11 @@
                                                 <span></span>
                                             </a>
                                             <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
-                                                <li><a href="#"><span><img src="https://img.icons8.com/fluent/48/000000/guest-male.png"/></span>&nbsp;&nbsp;My Account</a>
+                                                <li><a href="#"><span><img src="https://img.icons8.com/fluent/48/000000/guest-male.png"/></span>&nbsp;&nbsp;Soham Roy</a>
                                                 </li>
                                                 <li><a href="#"><span><i class="fa fa-cog" aria-hidden="true"></i></span>&nbsp;&nbsp;My Profile</a>
                                                 </li>
-                                                <li><a href="#"><span><i class="fa fa-usd" aria-hidden="true"></i></span>&nbsp;&nbsp;User Billing</a>
+                                                <li><a href="#"><span><i class="fa fa-language" aria-hidden="true"></i></span>&nbsp;&nbsp;Change Language <div id="google_translate_element"></div></a>
                                                 </li>
                                                 <li><a href="#"><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>&nbsp;&nbsp;Log Out</a>
                                                 </li>
@@ -283,9 +312,9 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <ul class="breadcome-menu">
-                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                            <li><a href="#"></a> <span class="bread-slash"></span>
                                             </li>
-                                            <li><span class="bread-blod">Form Element</span>
+                                            <li><span class="bread-blod"></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -314,10 +343,10 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <ul class="breadcome-menu">
-                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                             <li><a href="#">Home</a> <span class="bread-slash"></span>
                                             </li>
                                             <li><span class="bread-blod">Dashboard</span>
-                                            </li>
+                                            </li> 
                                         </ul>
                                     </div>
                                 </div>
@@ -339,8 +368,7 @@
                                         <h1>Device Data View</h1>
                                         <div class="sparkline8-outline-icon">
                                             <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                                            
                                         </div>
                                     </div>
                                 </div>

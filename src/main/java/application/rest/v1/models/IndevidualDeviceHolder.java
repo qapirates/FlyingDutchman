@@ -1,10 +1,10 @@
 package application.rest.v1.models;
 
-import java.util.Map;
+import java.time.LocalDateTime;
 
-public class IndevidualDeviceHolder {
+public class IndevidualDeviceHolder implements Comparable<IndevidualDeviceHolder>  {
 	
-	private String datetime;	
+	private LocalDateTime datetime;	
 	String parameter;
 	
 	public IndevidualDeviceHolder() {
@@ -13,15 +13,17 @@ public class IndevidualDeviceHolder {
 	
 	public IndevidualDeviceHolder(String datetime, String parameter) {
 		super();
-		this.datetime = datetime;
+		LocalDateTime dateTimes = LocalDateTime.parse(datetime);
+		this.datetime = dateTimes;
 		this.parameter = parameter;
 	}
 
-	public String getDatetime() {
+	public LocalDateTime getDatetime() {
 		return datetime;
 	}
 	public void setDatetime(String datetime) {
-		this.datetime = datetime;
+		LocalDateTime dateTimes = LocalDateTime.parse(datetime);
+		this.datetime = dateTimes;
 	}
 
 	public String getParameter() {
@@ -31,6 +33,14 @@ public class IndevidualDeviceHolder {
 	public void setParameter(String parameter) {
 		this.parameter = parameter;
 	}
+
+	@Override
+	public int compareTo(IndevidualDeviceHolder o) {
+		 int diff = this.datetime.compareTo(o.datetime);
+		return diff > 0 ? 1 : diff < 0 ? -1 :0;
+	}
+
+	
 	
 	
 	

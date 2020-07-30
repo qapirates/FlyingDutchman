@@ -110,6 +110,7 @@ public class GeneralViewRenderHelper {
 			}
 
 			//model.addAttribute("header", TABLEHEADER);
+			Collections.sort(indevidualAnalysis, Collections.reverseOrder());
 			model.addAttribute("indevidual", indevidualAnalysis);
 					
 		} catch (JsonProcessingException e) {

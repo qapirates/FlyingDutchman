@@ -63,6 +63,8 @@
     
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
      
+     
+     
      <script>
 		var _nextId = 1;
 		var _activeId = 0;var _GUID = 0;var _activeId = 0;var _MAC_ID = 0;var _Device_Name = 0;var _Country = 0;var _State = 0;var _Area = 0;var _Latitude = 0;var _Longitude = 0;
@@ -132,15 +134,15 @@
  			 _activeId = tab.rows[x].cells[1].innerHTML;
  			_GUID = tab.rows[x].cells[2].innerHTML;
  			_MAC_ID = tab.rows[x].cells[3].innerHTML;
- 			_Device_Name = tab.rows[x].cells[4].innerHTML;
- 			_Country = tab.rows[x].cells[5].innerHTML;
- 			_State = tab.rows[x].cells[6].innerHTML;
- 			_Area = tab.rows[x].cells[7].innerHTML;
- 			_Latitude = tab.rows[x].cells[8].innerHTML;
- 			_Longitude = tab.rows[x].cells[9].innerHTML;
- 			_Status = tab.rows[x].cells[10].innerHTML;
- 			_Last_Updated_By = tab.rows[x].cells[11].innerHTML;
- 			_Last_Updated_On = tab.rows[x].cells[12].innerHTML;
+ 			_Device_Name = tab.rows[x].cells[3].innerHTML;
+ 			_Country = tab.rows[x].cells[4].innerHTML;
+ 			_State = tab.rows[x].cells[5].innerHTML;
+ 			_Area = tab.rows[x].cells[6].innerHTML;
+ 			_Latitude = tab.rows[x].cells[7].innerHTML;
+ 			_Longitude = tab.rows[x].cells[8].innerHTML;
+ 			_Status = tab.rows[x].cells[9].innerHTML;
+ 			_Last_Updated_By = tab.rows[x].cells[10].innerHTML;
+ 			_Last_Updated_On = tab.rows[x].cells[11].innerHTML;
  			 //console.log(_activeId);
  			document.getElementById("Device_Id").value = _Device_Name;
 			let count = $('#country');let stat = $('#states');let areadd = $('#area-city');let stats = $('#Status');
@@ -176,7 +178,7 @@
  		 	        timeout: 600000,
  		 	        success: function (data) {
  		 	        	Swal.fire(
- 		 	        			  'Ypeeeeeeeee!',
+ 		 	        			  'Congratulations!',
  		 	        			  'Device details updated',
  		 	        			  'success'
  		 	        			)
@@ -337,18 +339,7 @@
                                 <a href="/admin/showUser" class="dropdown-item">User Details</a>
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-flask"></i> <span class="mini-dn">Interface</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="google-map.html" class="dropdown-item">Google Map</a>
-                                <a href="data-maps.html" class="dropdown-item">Data Maps</a>
-                                <a href="pdf-viewer.html" class="dropdown-item">Pdf Viewer</a>
-                                <a href="x-editable.html" class="dropdown-item">X-Editable</a>
-                                <a href="code-editor.html" class="dropdown-item">Code Editor</a>
-                                <a href="tree-view.html" class="dropdown-item">Tree View</a>
-                                <a href="preloader.html" class="dropdown-item">Preloader</a>
-                                <a href="images-cropper.html" class="dropdown-item">Images Cropper</a>
-                            </div>
-                        </li>
+                        
                         <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-phone" aria-hidden="true"></i> <span class="mini-dn">Services</span> <span class="indicator-right-menu mini-dn"></span></a>
                             
@@ -388,7 +379,7 @@
                                 <div class="header-right-info">
                                     <ul class="nav navbar-nav mai-top-nav header-right-menu">
                                         
-                                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="indicator-nt"></span></a>
+                                       <!-- <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="indicator-nt"></span></a>
                                             <div role="menu" class="notification-author dropdown-menu animated flipInX">
                                                 <div class="notification-single-top">
                                                     <h1>Notifications</h1>
@@ -447,7 +438,7 @@
                                                     <a href="#">View All Notification</a>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </li> -->
                                          <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
                                                 <span></span>
@@ -456,12 +447,11 @@
                                                 <span></span>
                                             </a>
                                             <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
-                                                <li><a href="#"><span><img src="https://img.icons8.com/fluent/48/000000/guest-male.png"/></span>&nbsp;&nbsp;My Account</a>
+                                                <li><a href="#"><span><img src="https://img.icons8.com/fluent/48/000000/guest-male.png"/></span>&nbsp;&nbsp;Soham Roy</a>
                                                 </li>
                                                 <li><a href="#"><span><i class="fa fa-cog" aria-hidden="true"></i></span>&nbsp;&nbsp;My Profile</a>
                                                 </li>
-                                                <li><a href="#"><span><i class="fa fa-usd" aria-hidden="true"></i></span>&nbsp;&nbsp;User Billing</a>
-                                                </li>
+                                                
                                                 <li><a href="#"><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>&nbsp;&nbsp;Log Out</a>
                                                 </li>
                                             </ul>
@@ -484,14 +474,17 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="breadcome-heading">
-                                            
+                                             <form role="search" class="">
+												<input type="text" placeholder="Search..." class="form-control">
+												<a href=""><i class="fa fa-search"></i></a>
+											</form>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <ul class="breadcome-menu">
-                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                            <li><a href="#"></a> <span class="bread-slash"></span>
                                             </li>
-                                            <li><span class="bread-blod">Form Element</span>
+                                            <li><span class="bread-blod"></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -520,9 +513,9 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <ul class="breadcome-menu">
-                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                            <li><a href="#"></a> <span class="bread-slash"></span>
                                             </li>
-                                            <li><span class="bread-blod">Dashboard</span>
+                                            <li><span class="bread-blod"></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -545,8 +538,7 @@
                                         <h1>Device Details</h1>
                                         <div class="sparkline16-outline-icon">
                                             <span class="sparkline16-collapse-link"><a href="/admin/addNew"><i class="fa fa-plus" aria-hidden="true"></i></a></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline16-collapse-close"><i class="fa fa-times"></i></span>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -557,7 +549,7 @@
                                                     <th data-field="state" data-checkbox="true"></th>
                                                     <th data-field="ID">ID</th>
                                                     <th data-field="GUID">GUID</th>
-                                                    <th data-field="MAC_ID">MAC ID</th>
+                                                    <!-- <th data-field="MAC_ID">MAC ID</th> -->
                                                     <th data-field="Device_Name">Device Name</th>
                                                     <th data-field="Country">Country</th>
                                                     <th data-field="State">State</th>
@@ -575,7 +567,7 @@
                                                     <td></td>
                                                     <td th:text="${ddata.id}" />
                                                     <td th:text="${ddata.guid}" />
-                                                    <td th:text="${ddata.mac_Id}" />
+                                                    <!-- <td th:text="${ddata.mac_Id}" /> -->
                                                     <td onclick="getRecent()" th:text="${ddata.device_Name}" />
                                                     <td th:text="${ddata.country}" />
                                                     <td th:text="${ddata.state}" />
